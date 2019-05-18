@@ -43,10 +43,11 @@ void Tower::shoot(Enemy *to_shoot)
 {
 
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
+	sf::Vector2f enemy_speed = to_shoot->returnSpeed();
 	Bullet *bullet = new Bullet(this->position);
-	bullet->setSpeed((enemy_pos.x - this->position.x) / 50, (enemy_pos.y - this->position.y) / 50);
-	std::cout << "Predkosc pocisku x: " << (enemy_pos.x - this->position.x) / 50 <<
-		" y : " << (enemy_pos.y - this->position.y) / 50 << std::endl;
+	bullet->setSpeed((enemy_pos.x - this->position.x) / 30 + enemy_speed.x, (enemy_pos.y - this->position.y) / 30 + enemy_speed.y);
+	//std::cout << "Predkosc pocisku x: " << (enemy_pos.x - this->position.x) / 50 <<
+	//	" y : " << (enemy_pos.y - this->position.y) / 50 << std::endl;
 	Bullets.push_back(bullet);
 }
 
@@ -77,4 +78,9 @@ int Tower::returnFrames()
 void Tower::resetFrames()
 {
 	this->frame = 0;
+}
+
+std::vector<Bullet*> *Tower::returnBullets()
+{
+	return &this->Bullets;
 }

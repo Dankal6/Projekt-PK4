@@ -26,6 +26,7 @@ public:
 	void shoot(Enemy*);
 	Enemy* check_if_in_range(std::vector<Enemy*>*);
 
+	std::vector<Bullet*> *returnBullets();
 	void incrementFrame();
 	int returnFrames();
 	void resetFrames();

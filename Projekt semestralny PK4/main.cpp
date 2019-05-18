@@ -75,6 +75,7 @@ int main()
 	{
 		frame++;
 		window.clear();
+		window.setKeyRepeatEnabled(false);
 
 		for (auto t : Towers)
 		{
@@ -122,6 +123,10 @@ int main()
 					t->resetFrames();
 				}
 			}
+			for (auto e : Enemies)
+			{
+				e->gotHitted(&Enemies, t->returnBullets());
+			}
 			//rysowanie pociskow
 			t->drawBullets();
 		}
@@ -138,13 +143,13 @@ int main()
 			for (auto e : Enemies)
 			{
 				sf::Vector2f enemy_pos = e->getPosition();
-				if (enemy_pos.y == 902)
+				if (enemy_pos.y == 850)
 				{
-					e->setSpeed(4, 0);
+					e->setSpeed(2, 0);
 				}
 				if (enemy_pos.x == 1900)
 				{
-					e->setSpeed(0, -4);
+					e->setSpeed(0, -2);
 				}
 			}
 		}

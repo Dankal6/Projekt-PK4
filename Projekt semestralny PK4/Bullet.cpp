@@ -28,3 +28,8 @@ void Bullet::drawBullet(sf::RenderWindow* window)
 {
 	window->draw(bullet);
 }
+
+sf::Vector2f Bullet::returnPosition()
+{
+	return this->bullet.getPosition();
+}
