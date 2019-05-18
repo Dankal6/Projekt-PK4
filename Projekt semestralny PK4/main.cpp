@@ -18,6 +18,7 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 		window->clear();
 		window->pollEvent(e);
 
+		//sprawdzam co sie zmienilo
 
 
 		float x = sf::Mouse::getPosition(*window).x;
