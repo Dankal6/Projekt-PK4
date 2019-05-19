@@ -6,6 +6,8 @@
 #include <iostream>
 #include "Enemy.h"
 #include "Tower.h"
+#include "EnemyBase.h"
+#include "PlayerBase.h"
 
 using namespace std;
 
@@ -58,30 +60,29 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!");
 	window.setFramerateLimit(60);
+	window.setKeyRepeatEnabled(false);
 
 	int frame = 0;
-	bool fire = false;
 	bool start = false;
 	bool placing_tower = false;
-	sf::Clock clock;
-
 
 	vector<Tower*> Towers;
 	vector<Enemy*> Enemies;
-
+	EnemyBase enemybase(sf::Vector2f(560.0f, -10.0f));
+	PlayerBase playerbase(sf::Vector2f(560.0f, 500.0f));
 
 
 	while (window.isOpen())
 	{
-		frame++;
 		window.clear();
-		window.setKeyRepeatEnabled(false);
+		frame++;
 
+		//czesc odpowiedzialna za czestotliwosc pojawiania sie przeciwnika, oraz pociskow
 		for (auto t : Towers)
 		{
 			t->incrementFrame();
 		}
-
+		enemybase.incrementFrame();
 
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -99,9 +100,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				start = true;
-				Enemy *enemy = new Enemy;
-				enemy->setSpeed(0, 2);
-				Enemies.push_back(enemy);
+				enemybase.setToSpawn(5);
 			}
 		}
 		//modul tworzenia wiezy
@@ -110,30 +109,45 @@ int main()
 			placeTower(&window, &Towers, &Enemies);
 			placing_tower = false;
 		}
+		//rysowanie bazy gracza
+		playerbase.drawBase(&window);
+		playerbase.check_if_enemy_in(&Enemies);
 		//rysowanie wiez
 		for (auto t : Towers)
 		{
 			t->drawTower();
-			Enemy *enemy_to_shoot=t->check_if_in_range(&Enemies);
+			//sprawdzanie, czy jakis przecinik jest w zasiegu
+			Enemy *enemy_to_shoot = t->check_if_in_range(&Enemies);
 			if (enemy_to_shoot != NULL)
 			{
 				if (t->returnFrames() >= 10)
 				{
+					//wystrzal
 					t->shoot(enemy_to_shoot);
 					t->resetFrames();
 				}
 			}
+			//sprawdzanie, czy przeciwnik zostal trafiony
 			for (auto e : Enemies)
 			{
-				e->gotHitted(&Enemies, t->returnBullets());
+				e->gotHitted(&Enemies, t->returnBullets(),&playerbase);
 			}
-			//rysowanie pociskow
+		}
+		//rysowanie pociskow, w osobnej petli, aby byly narysowane "na" wiezach
+		for (auto t : Towers)
+		{
 			t->drawBullets();
 		}
 
 		//start gry, przeciwnik rusza
 		if (start)
 		{
+			if (enemybase.returnFrames() >= 30)
+			{
+				enemybase.spawnEnemy(&Enemies);
+				enemybase.resetFrames();
+			}
+
 			for (auto e : Enemies)
 			{
 				e->move();
@@ -147,7 +161,7 @@ int main()
 				{
 					e->setSpeed(2, 0);
 				}
-				if (enemy_pos.x == 1900)
+				if (enemy_pos.x == 1800)
 				{
 					e->setSpeed(0, -2);
 				}
@@ -155,21 +169,6 @@ int main()
 		}
 
 		window.display();
-
-
-
-		//zabawa z czasem
-		{
-			sf::Time time = clock.getElapsedTime();
-			float t = time.asSeconds();
-			if (t > 4)
-			{
-				cout << frame << endl;
-				clock.restart();
-				//frame = 0;
-			}
-		}
-
 	}
 
 	return 0;

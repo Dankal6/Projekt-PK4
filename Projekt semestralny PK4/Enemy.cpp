@@ -2,11 +2,11 @@
 
 
 
-Enemy::Enemy()
+Enemy::Enemy(sf::Vector2f pos)
 {
 	enemy.setSize(sf::Vector2f(40.0f, 40.0f));
 	enemy.setFillColor(sf::Color::Red);
-	enemy.setPosition(sf::Vector2f(60.0f, -10.0f));
+	enemy.setPosition(pos);
 	enemy.setOrigin(20, 20);
 	this->healthPoint = 60;
 }
@@ -41,7 +41,7 @@ sf::Vector2f Enemy::returnSpeed()
 	return this->speed;
 }
 
-bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullets)
+bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullets, PlayerBase *player)
 {
 	int i = 0;
 	for (auto e : *Enemies)
@@ -52,7 +52,7 @@ bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullet
 		}
 		i++;
 	}
-
+	int j = 0;
 	for (auto b : *Bullets)
 	{
 		//if (enemy.getGlobalBounds().contains(b->returnPosition))
@@ -61,15 +61,16 @@ bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullet
 		float y = bullet_pos.y;
 		if (enemy.getGlobalBounds().contains(x, y))
 		{
- 			this->healthPoint -= 20;
-			Bullets->erase(Bullets->begin());
+  			this->healthPoint -= 20;
+			Bullets->erase(Bullets->begin()+j);
 			if (this->healthPoint <= 0)
 			{
 				Enemies->erase(Enemies->begin() + i);  
 				std::cout << "Padl przeciwnik: " << i << ", pozostalo przeciwnikow: " << Enemies->size() << std::endl;
+				player->addPoints(1);
 			}
 			return true;
 		}
-
+		j++;
 	}
 } 

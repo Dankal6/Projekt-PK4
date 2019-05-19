@@ -13,7 +13,7 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	range.setRadius(range_rad);
 	range.setOrigin(range_rad, range_rad);
 	range.setPosition(position);
-	range.setFillColor(sf::Color(50, 50, 50));
+	range.setFillColor(sf::Color(50, 50, 50,128));
 
 	this->frame = 0;
 }
