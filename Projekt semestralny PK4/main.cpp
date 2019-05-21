@@ -32,7 +32,7 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 		//Odtwarzanie dotychczasowych przeciwnikow na mapie
 		for (auto e : *Enemies)
 		{
-			e->drawEnemy(window);
+			e->drawEnemy(*window);
 		}
 		//Odtwarzanie dotychczasowych wiez na mapie
 		for (auto e : *Towers)
@@ -62,6 +62,9 @@ int main()
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
+	sf::Clock clock;
+	float deltaTime;
+
 	int frame = 0;
 	bool start = false;
 	bool placing_tower = false;
@@ -69,11 +72,12 @@ int main()
 	vector<Tower*> Towers;
 	vector<Enemy*> Enemies;
 	EnemyBase enemybase(sf::Vector2f(560.0f, -10.0f));
-	PlayerBase playerbase(sf::Vector2f(560.0f, 500.0f));
+	PlayerBase playerbase(sf::Vector2f(560.0f, 1000.0f));
 
 
 	while (window.isOpen())
 	{
+		deltaTime = clock.restart().asSeconds();
 		window.clear();
 		frame++;
 
@@ -150,20 +154,31 @@ int main()
 
 			for (auto e : Enemies)
 			{
-				e->move();
-				e->drawEnemy(&window);
+				e->move(deltaTime);
+				e->drawEnemy(window);
 			}
 			//zmiana kierunku ruchu przeciwnika
 			for (auto e : Enemies)
 			{
-				sf::Vector2f enemy_pos = e->getPosition();
-				if (enemy_pos.y == 850)
+				//skret w prawo
+				if (e->getPosition().y == 850 && e->returnSpeed().y > 0)
 				{
 					e->setSpeed(2, 0);
 				}
-				if (enemy_pos.x == 1800)
+				//ruch w gore
+				if (e->getPosition().x == 1800 && e->returnSpeed().x > 0)
 				{
 					e->setSpeed(0, -2);
+				}
+				//skret w lewo
+				if (e->getPosition().y == 100 && e->returnSpeed().y < 0)
+				{
+					e->setSpeed(-2, 0);
+				}
+				//ruch w dol
+				if (e->getPosition().x == 100 && e->returnSpeed().x < 0)
+				{
+					e->setSpeed(0, 2);
 				}
 			}
 		}
