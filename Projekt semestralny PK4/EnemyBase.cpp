@@ -6,6 +6,11 @@ EnemyBase::EnemyBase(sf::Vector2f pos)
 {
 	position = pos;
 	frame = 0;
+
+	base.setSize(sf::Vector2f(60.0f, 60.0f));
+	base.setFillColor(sf::Color::Red);
+	base.setPosition(pos);
+	base.setOrigin(30, 30);
 }
 
 
@@ -18,7 +23,6 @@ void EnemyBase::spawnEnemy(std::vector<Enemy*>*Enemies)
 	if(this->toSpawn>0)
 	{
 		Enemy *enemy = new Enemy(position);
-		enemy->setSpeed(0, 2);
 		Enemies->push_back(enemy);
 		this->toSpawn--;
 	}
@@ -28,6 +32,11 @@ void EnemyBase::spawnEnemy(std::vector<Enemy*>*Enemies)
 void EnemyBase::setToSpawn(int x)
 {
 	this->toSpawn = x;
+}
+
+void EnemyBase::drawBase(sf::RenderWindow & window)
+{
+	window.draw(base);
 }
 
 void EnemyBase::incrementFrame()

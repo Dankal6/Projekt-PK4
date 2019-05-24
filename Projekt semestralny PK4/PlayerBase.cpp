@@ -51,13 +51,14 @@ void PlayerBase::drawBase(sf::RenderWindow* window)
 	{
 		gameOver(window);
 	}
+	//Wyswietlanie punktow gracza
 	sf::Font ttf;
 	ttf.loadFromFile("fonts/font.ttf");
 	std::string s(std::to_string(returnPoints()));
 	sf::Text txt(s, ttf);
 	txt.setCharacterSize(150);
 	txt.setFillColor(sf::Color(69, 120, 189));
-	txt.setPosition(100, 40);
+	txt.setPosition(1600, 40);
 	window->draw(txt);
 }
 

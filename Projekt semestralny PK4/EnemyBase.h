@@ -6,6 +6,7 @@ class EnemyBase
 {
 private:
 	sf::Vector2f position;
+	sf::RectangleShape base;
 	int toSpawn;
 	int frame;	//prowizoryczna czestotliwosc tworzenia przeciwnikow
 	std::vector<Enemy*> Enemies;
@@ -15,6 +16,7 @@ public:
 	~EnemyBase();
 	void spawnEnemy(std::vector<Enemy*>*);
 	void setToSpawn(int);
+	void drawBase(sf::RenderWindow&);
 
 	void incrementFrame();
 	int returnFrames();

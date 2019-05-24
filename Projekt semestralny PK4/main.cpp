@@ -8,10 +8,11 @@
 #include "Tower.h"
 #include "EnemyBase.h"
 #include "PlayerBase.h"
+#include "Map.h"
 
 using namespace std;
 
-void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*> *Enemies)
+void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*> *Enemies,Map &map)
 {
 	bool clicked = false;
 	sf::Event e;
@@ -20,15 +21,7 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 		window->clear();
 		window->pollEvent(e);
 
-		//sprawdzam co sie zmienilo
-
-
-		float x = sf::Mouse::getPosition(*window).x;
-		float y = sf::Mouse::getPosition(*window).y;
-		sf::Vector2f pos = { x,y };
-		Tower temp(window, pos);
-		temp.drawTower();
-
+		map.drawMap(*window);
 		//Odtwarzanie dotychczasowych przeciwnikow na mapie
 		for (auto e : *Enemies)
 		{
@@ -39,7 +32,15 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 		{
 			e->drawTower();
 		}
+
+		//sprawdzam co sie zmienilo
+		float x = sf::Mouse::getPosition(*window).x;
+		float y = sf::Mouse::getPosition(*window).y;
+		sf::Vector2f pos = { x,y };
+		Tower temp(window, pos);
+		temp.drawTower();
 		window->display();
+
 		if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left)
 		{
 			clicked = true;
@@ -58,7 +59,7 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "SFML works!");
+	sf::RenderWindow window(sf::VideoMode(1920, 1080), "TD");
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
@@ -71,15 +72,18 @@ int main()
 
 	vector<Tower*> Towers;
 	vector<Enemy*> Enemies;
-	EnemyBase enemybase(sf::Vector2f(560.0f, -10.0f));
-	PlayerBase playerbase(sf::Vector2f(560.0f, 1000.0f));
+	Map map;
+	EnemyBase enemybase(sf::Vector2f(-20.0f, 145.0f));
+	PlayerBase playerbase(sf::Vector2f(1940.0f, 920.0f));
 
 
 	while (window.isOpen())
 	{
+		std::cout << sf::Mouse::getPosition(window).x << ";" << sf::Mouse::getPosition(window).y << endl;
 		deltaTime = clock.restart().asSeconds();
 		window.clear();
 		frame++;
+		map.drawMap(window);
 
 		//czesc odpowiedzialna za czestotliwosc pojawiania sie przeciwnika, oraz pociskow
 		for (auto t : Towers)
@@ -101,20 +105,46 @@ int main()
 				placing_tower = true;
 			}
 			//Tworze nowego przeciwnika
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
+			{
+				window.setFramerateLimit(60);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
+			{
+				window.setFramerateLimit(120);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
+			{
+				window.setFramerateLimit(240);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))
+			{
+				window.setFramerateLimit(0);
+			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				start = true;
 				enemybase.setToSpawn(5);
+				//prowizoryczne poki co wyswietlanie Start
+				sf::Font ttf;
+				ttf.loadFromFile("fonts/font.ttf");
+				std::string s("Start");
+				sf::Text txt(s, ttf);
+				txt.setCharacterSize(150);
+				txt.setFillColor(sf::Color::Red);
+				txt.setPosition(1000, 40);
+				window.draw(txt);
 			}
 		}
 		//modul tworzenia wiezy
 		if (placing_tower)
 		{
-			placeTower(&window, &Towers, &Enemies);
+			placeTower(&window, &Towers, &Enemies,map);
 			placing_tower = false;
 		}
 		//rysowanie bazy gracza
 		playerbase.drawBase(&window);
+		enemybase.drawBase(window);
 		playerbase.check_if_enemy_in(&Enemies);
 		//rysowanie wiez
 		for (auto t : Towers)
@@ -157,32 +187,7 @@ int main()
 				e->move(deltaTime);
 				e->drawEnemy(window);
 			}
-			//zmiana kierunku ruchu przeciwnika
-			for (auto e : Enemies)
-			{
-				//skret w prawo
-				if (e->getPosition().y == 850 && e->returnSpeed().y > 0)
-				{
-					e->setSpeed(2, 0);
-				}
-				//ruch w gore
-				if (e->getPosition().x == 1800 && e->returnSpeed().x > 0)
-				{
-					e->setSpeed(0, -2);
-				}
-				//skret w lewo
-				if (e->getPosition().y == 100 && e->returnSpeed().y < 0)
-				{
-					e->setSpeed(-2, 0);
-				}
-				//ruch w dol
-				if (e->getPosition().x == 100 && e->returnSpeed().x < 0)
-				{
-					e->setSpeed(0, 2);
-				}
-			}
 		}
-
 		window.display();
 	}
 

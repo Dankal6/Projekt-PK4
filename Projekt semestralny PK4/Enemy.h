@@ -23,6 +23,7 @@ public:
 	~Enemy();
 	void drawEnemy(sf::RenderWindow&);
 	void move(float);
+	void checkToTurn();
 	void setSpeed(float, float);
 	sf::Vector2f returnSpeed();
 	sf::Vector2f getPosition();
