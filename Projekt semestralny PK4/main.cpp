@@ -14,6 +14,7 @@ using namespace std;
 
 void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*> *Enemies,Map &map)
 {
+
 	bool clicked = false;
 	sf::Event e;
 	while (clicked == false)
@@ -32,13 +33,18 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 		{
 			e->drawTower();
 		}
-
-		//sprawdzam co sie zmienilo
 		float x = sf::Mouse::getPosition(*window).x;
 		float y = sf::Mouse::getPosition(*window).y;
 		sf::Vector2f pos = { x,y };
 		Tower temp(window, pos);
 		temp.drawTower();
+
+		/*sf::RectangleShape p1;
+		p1.setSize(sf::Vector2f(60, 60));
+		p1.setFillColor(sf::Color::Black);
+		p1.setPosition(pos);
+		window->draw(p1);*/
+
 		window->display();
 
 		if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left)
@@ -53,6 +59,17 @@ void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*>
 	float x = sf::Mouse::getPosition(*window).x;
 	float y = sf::Mouse::getPosition(*window).y;
 	sf::Vector2f pos = { x,y };
+
+	/* czesc poswiecona tworzeniu pol na wieze
+	sf::RectangleShape p1;
+	p1.setSize(sf::Vector2f(60, 60));
+	p1.setFillColor(sf::Color::Black);
+	p1.setPosition(pos);
+	placesForTowers.push_back(p1);
+	for (auto p : placesForTowers)
+	{
+		std::cout << p.getPosition().x << " : " << p.getPosition().y << std::endl;
+	}*/
 	Tower *tower = new Tower(window, pos);
 	Towers->push_back(tower);
 }
@@ -98,6 +115,17 @@ int main()
 			if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
 			{
 				window.close();
+			}
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+			{
+				sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
+				for (auto t : Towers)
+				{
+					if (t->isClicked(mousePos))
+					{
+						t->actionWithTower();
+					}
+				}
 			}
 			//Wyrazam chec stworzenia nowej wiezy
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))

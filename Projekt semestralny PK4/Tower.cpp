@@ -13,7 +13,7 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	range.setRadius(range_rad);
 	range.setOrigin(range_rad, range_rad);
 	range.setPosition(position);
-	range.setFillColor(sf::Color(50, 50, 50,128));
+	range.setFillColor(sf::Color(50, 50, 50, 128));
 
 	this->frame = 0;
 }
@@ -65,6 +65,18 @@ Enemy* Tower::check_if_in_range(std::vector<Enemy*> *Enemies)
 	return NULL;
 }
 
+bool Tower::isClicked(sf::Vector2f mousePosition)
+{
+	if (this->tower.getGlobalBounds().contains(mousePosition))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 void Tower::incrementFrame()
 {
 	this->frame++;
@@ -78,6 +90,11 @@ int Tower::returnFrames()
 void Tower::resetFrames()
 {
 	this->frame = 0;
+}
+
+void Tower::actionWithTower()
+{
+	this->tower.setFillColor(sf::Color::Red);
 }
 
 std::vector<Bullet*> *Tower::returnBullets()

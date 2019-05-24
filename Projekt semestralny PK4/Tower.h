@@ -25,11 +25,14 @@ public:
 	void drawBullets();
 	void shoot(Enemy*);
 	Enemy* check_if_in_range(std::vector<Enemy*>*);
+	bool isClicked(sf::Vector2f);
 
 	std::vector<Bullet*> *returnBullets();
 	void incrementFrame();
 	int returnFrames();
 	void resetFrames();
+
+	void actionWithTower();
 };
 
 
