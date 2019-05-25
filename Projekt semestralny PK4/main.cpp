@@ -9,70 +9,9 @@
 #include "EnemyBase.h"
 #include "PlayerBase.h"
 #include "Map.h"
+#include "TowerManager.h"
 
 using namespace std;
-
-void placeTower(sf::RenderWindow *window, vector<Tower*> *Towers, vector<Enemy*> *Enemies,Map &map)
-{
-
-	bool clicked = false;
-	sf::Event e;
-	while (clicked == false)
-	{
-		window->clear();
-		window->pollEvent(e);
-
-		map.drawMap(*window);
-		//Odtwarzanie dotychczasowych przeciwnikow na mapie
-		for (auto e : *Enemies)
-		{
-			e->drawEnemy(*window);
-		}
-		//Odtwarzanie dotychczasowych wiez na mapie
-		for (auto e : *Towers)
-		{
-			e->drawTower();
-		}
-		float x = sf::Mouse::getPosition(*window).x;
-		float y = sf::Mouse::getPosition(*window).y;
-		sf::Vector2f pos = { x,y };
-		Tower temp(window, pos);
-		temp.drawTower();
-
-		/*sf::RectangleShape p1;
-		p1.setSize(sf::Vector2f(60, 60));
-		p1.setFillColor(sf::Color::Black);
-		p1.setPosition(pos);
-		window->draw(p1);*/
-
-		window->display();
-
-		if (e.type == sf::Event::MouseButtonPressed && e.mouseButton.button == sf::Mouse::Left)
-		{
-			clicked = true;
-		}
-		if (e.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
-		{
-			window->close();
-		}
-	}
-	float x = sf::Mouse::getPosition(*window).x;
-	float y = sf::Mouse::getPosition(*window).y;
-	sf::Vector2f pos = { x,y };
-
-	/* czesc poswiecona tworzeniu pol na wieze
-	sf::RectangleShape p1;
-	p1.setSize(sf::Vector2f(60, 60));
-	p1.setFillColor(sf::Color::Black);
-	p1.setPosition(pos);
-	placesForTowers.push_back(p1);
-	for (auto p : placesForTowers)
-	{
-		std::cout << p.getPosition().x << " : " << p.getPosition().y << std::endl;
-	}*/
-	Tower *tower = new Tower(window, pos);
-	Towers->push_back(tower);
-}
 
 int main()
 {
@@ -92,6 +31,8 @@ int main()
 	Map map;
 	EnemyBase enemybase(sf::Vector2f(-20.0f, 145.0f));
 	PlayerBase playerbase(sf::Vector2f(1940.0f, 920.0f));
+	TowerManager towermanager(&map, &Towers,&window);
+
 
 
 	while (window.isOpen())
@@ -119,18 +60,8 @@ int main()
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
-				for (auto t : Towers)
-				{
-					if (t->isClicked(mousePos))
-					{
-						t->actionWithTower();
-					}
-				}
-			}
-			//Wyrazam chec stworzenia nowej wiezy
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-			{
-				placing_tower = true;
+				towermanager.isPlaceClicked(mousePos);
+ 				towermanager.isTowerClicked(mousePos);
 			}
 			//Tworze nowego przeciwnika
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
@@ -163,12 +94,6 @@ int main()
 				txt.setPosition(1000, 40);
 				window.draw(txt);
 			}
-		}
-		//modul tworzenia wiezy
-		if (placing_tower)
-		{
-			placeTower(&window, &Towers, &Enemies,map);
-			placing_tower = false;
 		}
 		//rysowanie bazy gracza
 		playerbase.drawBase(&window);

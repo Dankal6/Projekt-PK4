@@ -9,12 +9,13 @@
 class Tower
 {
 private:
-	sf::CircleShape tower;
+	sf::RectangleShape tower;
 	sf::CircleShape range;
 	sf::Vector2f position;
 	sf::RenderWindow *window;
 	std::vector<Bullet*> Bullets;
-	int rad = 30;
+	sf::Texture towerTexture;
+	int size = 140;
 	int range_rad = 200;
 	bool is_builded = false;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
@@ -31,6 +32,7 @@ public:
 	void incrementFrame();
 	int returnFrames();
 	void resetFrames();
+	sf::RectangleShape* returnTower();
 
 	void actionWithTower();
 };

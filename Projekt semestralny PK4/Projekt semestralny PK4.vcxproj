@@ -141,8 +141,10 @@
     </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
+    <ClCompile Include="PlaceForTower.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="TowerManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
@@ -151,8 +153,10 @@
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Pathfinding.h" />
+    <ClInclude Include="PlaceForTower.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="Tower.h" />
+    <ClInclude Include="TowerManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

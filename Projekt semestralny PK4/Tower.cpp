@@ -6,14 +6,17 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 {
 	window = main_window;
 	position = pos;
-	tower.setRadius(rad);
-	tower.setOrigin(rad, rad);
+	tower.setSize(sf::Vector2f(size, size));
+	tower.setOrigin(size/2, size-40);
 	tower.setPosition(position);
 
 	range.setRadius(range_rad);
 	range.setOrigin(range_rad, range_rad);
 	range.setPosition(position);
 	range.setFillColor(sf::Color(50, 50, 50, 128));
+
+	towerTexture.loadFromFile("Textures/tower1.png");
+	tower.setTexture(&towerTexture);
 
 	this->frame = 0;
 }
@@ -26,7 +29,6 @@ Tower::~Tower()
 
 void Tower::drawTower()
 {
-	window->draw(range);
 	window->draw(tower);
 }
 
@@ -90,6 +92,11 @@ int Tower::returnFrames()
 void Tower::resetFrames()
 {
 	this->frame = 0;
+}
+
+sf::RectangleShape * Tower::returnTower()
+{
+	return &this->tower;
 }
 
 void Tower::actionWithTower()
