@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Scale.h"
+
 class PlaceForTower
 {
 	sf::Texture placeForTowerTexture;

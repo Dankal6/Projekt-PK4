@@ -143,6 +143,7 @@
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PlaceForTower.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="TowerManager.cpp" />
   </ItemGroup>
@@ -155,6 +156,7 @@
     <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="PlaceForTower.h" />
     <ClInclude Include="PlayerBase.h" />
+    <ClInclude Include="Scale.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="TowerManager.h" />
   </ItemGroup>

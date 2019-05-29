@@ -10,12 +10,14 @@
 #include "PlayerBase.h"
 #include "Map.h"
 #include "TowerManager.h"
+#include "Scale.h"
 
 using namespace std;
 
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920, 1080), "TD");
+	sf::RenderWindow window(sf::VideoMode(1920*scale, 1080*scale), "TD");
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
@@ -29,15 +31,15 @@ int main()
 	vector<Tower*> Towers;
 	vector<Enemy*> Enemies;
 	Map map;
-	EnemyBase enemybase(sf::Vector2f(-20.0f, 145.0f));
-	PlayerBase playerbase(sf::Vector2f(1940.0f, 920.0f));
+	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
+	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
 	TowerManager towermanager(&map, &Towers,&window);
 
 
 
 	while (window.isOpen())
 	{
-		std::cout << sf::Mouse::getPosition(window).x << ";" << sf::Mouse::getPosition(window).y << endl;
+		//std::cout << sf::Mouse::getPosition(window).x << ";" << sf::Mouse::getPosition(window).y << endl;
 		deltaTime = clock.restart().asSeconds();
 		window.clear();
 		frame++;
@@ -91,7 +93,7 @@ int main()
 				sf::Text txt(s, ttf);
 				txt.setCharacterSize(150);
 				txt.setFillColor(sf::Color::Red);
-				txt.setPosition(1000, 40);
+				txt.setPosition(1000 * scale, 40 * scale);
 				window.draw(txt);
 			}
 		}

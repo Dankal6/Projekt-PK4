@@ -5,12 +5,12 @@
 PlaceForTower::PlaceForTower(int x, int y)
 {
 
-	placeSize = sf::Vector2f(80, 80);
+	placeSize = sf::Vector2f(80 * scale, 80 * scale);
 	placeForTowerTexture.loadFromFile("Textures/placeTowerGrass.png");
 	placeForTowerTexture.setSmooth(true);
 	placeForTower.setSize(placeSize);
 	placeForTower.setTexture(&placeForTowerTexture);
-	placeForTower.setOrigin(40, 40);
+	placeForTower.setOrigin(40 * scale, 40 * scale);
 	placeForTower.setPosition(x, y);
 	occupied = false;
 

@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include <math.h>
+#include "Scale.h"
 
 #include <iostream>
 
@@ -15,8 +16,8 @@ private:
 	sf::RenderWindow *window;
 	std::vector<Bullet*> Bullets;
 	sf::Texture towerTexture;
-	int size = 140;
-	int range_rad = 200;
+	int size = 140 * scale;
+	int range_rad = 200 * scale;
 	bool is_builded = false;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
 public:

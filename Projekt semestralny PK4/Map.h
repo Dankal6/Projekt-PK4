@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "PlaceForTower.h"
+#include "Scale.h"
 
 class Map
 {

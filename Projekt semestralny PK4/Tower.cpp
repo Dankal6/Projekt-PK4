@@ -7,7 +7,7 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	window = main_window;
 	position = pos;
 	tower.setSize(sf::Vector2f(size, size));
-	tower.setOrigin(size/2, size-40);
+	tower.setOrigin((size/2), (size-(40*scale)));
 	tower.setPosition(position);
 
 	range.setRadius(range_rad);

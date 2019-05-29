@@ -4,7 +4,7 @@
 
 Map::Map()
 {
-	map.setSize(sf::Vector2f(1920.0f, 1080.0f));
+	map.setSize(sf::Vector2f(1920.0f*scale, 1080.0f*scale));
 	map.setPosition(0, 0);
 	mapTexture.loadFromFile("Textures/Grass1.png");
 	mapTexture.setSmooth(true);
@@ -30,41 +30,41 @@ void Map::drawMap(sf::RenderWindow & window)
 void Map::generatePlaces()
 {
 	//tworze miejsca pod wiezyczki
-	PlaceForTower *p1 = new PlaceForTower(385, 235);
+	PlaceForTower *p1 = new PlaceForTower(385 * scale, 235 * scale);
 	placesForTowers.push_back(p1);
-	PlaceForTower *p2 = new PlaceForTower(580,250);
+	PlaceForTower *p2 = new PlaceForTower(580 * scale,250 * scale);
 	placesForTowers.push_back(p2);
-	PlaceForTower *p3 = new PlaceForTower(685, 250);
+	PlaceForTower *p3 = new PlaceForTower(685 * scale, 250 * scale);
 	placesForTowers.push_back(p3);
-	PlaceForTower *p4 = new PlaceForTower(885, 240);
+	PlaceForTower *p4 = new PlaceForTower(885 * scale, 240 * scale);
 	placesForTowers.push_back(p4);
-	PlaceForTower *p5 = new PlaceForTower(1021, 242);
+	PlaceForTower *p5 = new PlaceForTower(1021 * scale, 242 * scale);
 	placesForTowers.push_back(p5);
-	PlaceForTower *p6 = new PlaceForTower(1023, 453);
+	PlaceForTower *p6 = new PlaceForTower(1023 * scale, 453 * scale);
 	placesForTowers.push_back(p6);
-	PlaceForTower* p7 = new PlaceForTower(902, 627);
+	PlaceForTower* p7 = new PlaceForTower(902 * scale, 627 * scale);
 	placesForTowers.push_back(p7);
-	PlaceForTower* p8 = new PlaceForTower(906, 835);
+	PlaceForTower* p8 = new PlaceForTower(906 * scale, 835 * scale);
 	placesForTowers.push_back(p8);
-	PlaceForTower *p9 = new PlaceForTower(1040, 835);
+	PlaceForTower *p9 = new PlaceForTower(1040 * scale, 835 * scale);
 	placesForTowers.push_back(p9);
-	PlaceForTower *p10 = new PlaceForTower(1236, 820);
+	PlaceForTower *p10 = new PlaceForTower(1236 * scale, 820 * scale);
 	placesForTowers.push_back(p10);
-	PlaceForTower *p11 = new PlaceForTower(1346, 820);
+	PlaceForTower *p11 = new PlaceForTower(1346 * scale, 820 * scale);
 	placesForTowers.push_back(p11);
-	PlaceForTower *p12 = new PlaceForTower(1540, 840);
+	PlaceForTower *p12 = new PlaceForTower(1540 * scale, 840 * scale);
 	placesForTowers.push_back(p12);
-	PlaceForTower *p13 = new PlaceForTower(1072, 626);
+	PlaceForTower *p13 = new PlaceForTower(1072 * scale, 626 * scale);
 	placesForTowers.push_back(p13);
-	PlaceForTower* p14 = new PlaceForTower(1222, 296);
+	PlaceForTower* p14 = new PlaceForTower(1222 * scale, 296 * scale);
 	placesForTowers.push_back(p14);
-	PlaceForTower *p15 = new PlaceForTower(714, 726);
+	PlaceForTower *p15 = new PlaceForTower(714 * scale, 726 * scale);
 	placesForTowers.push_back(p15);
-	PlaceForTower *p16 = new PlaceForTower(822, 445);
+	PlaceForTower *p16 = new PlaceForTower(822 * scale, 445 * scale);
 	placesForTowers.push_back(p16);
-	PlaceForTower *p17 = new PlaceForTower(693, 417);
+	PlaceForTower *p17 = new PlaceForTower(693 * scale, 417 * scale);
 	placesForTowers.push_back(p17);
-	PlaceForTower *p18 = new PlaceForTower(471, 68);
+	PlaceForTower *p18 = new PlaceForTower(471 * scale, 68 * scale);
 	placesForTowers.push_back(p18);
 }
 

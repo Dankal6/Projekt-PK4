@@ -4,10 +4,10 @@
 
 PlayerBase::PlayerBase(sf::Vector2f pos)
 {
-	base.setSize(sf::Vector2f(60.0f, 60.0f));
+	base.setSize(sf::Vector2f(60.0f*scale, 60.0f*scale));
 	base.setFillColor(sf::Color::Blue);
 	base.setPosition(pos);
-	base.setOrigin(30, 30);
+	base.setOrigin(30 * scale, 30 * scale);
 	lifes = 1;
 }
 
@@ -38,9 +38,9 @@ void PlayerBase::gameOver(sf::RenderWindow* window)
 	ttf.loadFromFile("fonts/font.ttf");
 	std::string s("GAME OVER");
 	sf::Text txt(s, ttf);
-	txt.setCharacterSize(150);
+	txt.setCharacterSize(150 * scale);
 	txt.setFillColor(sf::Color(69, 120, 189));
-	txt.setPosition(100, 40);
+	txt.setPosition(100 * scale, 40 * scale);
 	window->draw(txt);
 }
 
@@ -56,9 +56,9 @@ void PlayerBase::drawBase(sf::RenderWindow* window)
 	ttf.loadFromFile("fonts/font.ttf");
 	std::string s(std::to_string(returnPoints()));
 	sf::Text txt(s, ttf);
-	txt.setCharacterSize(150);
+	txt.setCharacterSize(150 * scale);
 	txt.setFillColor(sf::Color(69, 120, 189));
-	txt.setPosition(1600, 40);
+	txt.setPosition(1600*scale, 40 * scale);
 	window->draw(txt);
 }
 

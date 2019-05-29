@@ -4,6 +4,7 @@
 #include "PlayerBase.h"
 #include <iostream>
 #include "Animation.h"
+#include "Scale.h"
 
 class PlayerBase;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
 

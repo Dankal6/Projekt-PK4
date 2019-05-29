@@ -4,15 +4,15 @@
 
 Enemy::Enemy(sf::Vector2f pos)
 {
-	enemy.setSize(sf::Vector2f(25.0f, 50.0f));
+	enemy.setSize(sf::Vector2f(25.0f*scale, 50.0f*scale));
 	//enemy.setFillColor(sf::Color::Red);
 	enemy.setPosition(pos);
-	enemy.setOrigin(10, 20);
+	enemy.setOrigin(10 * scale, 20 * scale);
 	this->healthPoint = 60;
 	this->healthPointLeft = 60;
-	healthBar.setSize(sf::Vector2f(26.0f, 2.0f));
+	healthBar.setSize(sf::Vector2f(26.0f*scale, 2.0f*scale));
 	healthBar.setFillColor(sf::Color::Green);
-	healthBar.setOrigin(13, 25);
+	healthBar.setOrigin(13 * scale, 25 * scale);
 	healthBar.setPosition(pos);
 
 	//inicjacja ruchu
@@ -59,53 +59,54 @@ void Enemy::move(float deltaTime)
 void Enemy::checkToTurn()
 {
 	//zakrety na trasie
-	if (enemy.getPosition().x > 478 && enemy.getPosition().x < 482 && enemy.getPosition().y == 145)
+	//std::cout << "Enemy position x: " << enemy.getPosition().x << " y: " << enemy.getPosition().y << std::endl;
+	if (enemy.getPosition().x > 478 * scale && enemy.getPosition().x < 482 * scale && enemy.getPosition().y >= 144 * scale && enemy.getPosition().y < 302 * scale)
 	{
-		this->setSpeed(0, 2);
+		this->setSpeed(0 * scale, 2 * scale);
 	}
-	else if (enemy.getPosition().x == 480 && enemy.getPosition().y > 302)
+	else if (enemy.getPosition().x > 478 * scale && enemy.getPosition().x < 482 && enemy.getPosition().y > 302 * scale)
 	{
-		this->setSpeed(2, 0);
+		this->setSpeed(2 * scale, 0 * scale);
 	}
-	else if (enemy.getPosition().x > 780 && enemy.getPosition().x < 784 && enemy.getPosition().y == 303)
+	else if (enemy.getPosition().x > 780 * scale && enemy.getPosition().x < 784 * scale && enemy.getPosition().y > 302 * scale)
 	{
-		this->setSpeed(0, -2);
+		this->setSpeed(0 * scale, -2 * scale);
 	}
-	else if (enemy.getPosition().x == 782 && enemy.getPosition().y < 146)
+	else if (enemy.getPosition().x > 780 * scale && enemy.getPosition().x < 784 * scale && enemy.getPosition().y < 146 * scale)
 	{
-		this->setSpeed(2, 0);
+		this->setSpeed(2 * scale, 0 * scale);
 	}
-	else if (enemy.getPosition().x > 1110 && enemy.getPosition().y == 145)
+	else if (enemy.getPosition().x > 1110 * scale && enemy.getPosition().y < 146 * scale)
 	{
-		this->setSpeed(0, 2);
+		this->setSpeed(0 * scale, 2 * scale);
 	}
-	else if (enemy.getPosition().x == 1112 && enemy.getPosition().y > 514 && enemy.getPosition().y < 520)
+	else if (enemy.getPosition().x > 1110 * scale && enemy.getPosition().y > 514 * scale && enemy.getPosition().y < 520 * scale)
 	{
-		this->setSpeed(-2, 0);
+		this->setSpeed(-2 * scale, 0 * scale);
 	}
-	else if (enemy.getPosition().x > 804 && enemy.getPosition().x < 810 && enemy.getPosition().y > 504 && enemy.getPosition().y < 530)
+	else if (enemy.getPosition().x > 804 * scale && enemy.getPosition().x < 810 * scale && enemy.getPosition().y > 504 * scale && enemy.getPosition().y < 530 * scale)
 	{
-		this->setSpeed(0, 2);
+		this->setSpeed(0 * scale, 2 * scale);
 	}
-	else if (enemy.getPosition().x > 804 && enemy.getPosition().x < 810 && enemy.getPosition().y > 900)
+	else if (enemy.getPosition().x > 804 * scale && enemy.getPosition().x < 810 * scale && enemy.getPosition().y > 900 * scale)
 	{
-		this->setSpeed(2, 0);
+		this->setSpeed(2 * scale, 0 * scale);
 	}
-	else if (enemy.getPosition().x > 1120 && enemy.getPosition().x < 1124 && enemy.getPosition().y > 900)
+	else if (enemy.getPosition().x > 1120 * scale && enemy.getPosition().x < 1124 * scale && enemy.getPosition().y > 900 * scale)
 	{
-		this->setSpeed(0, -2);
+		this->setSpeed(0 * scale, -2 * scale);
 	}
-	else if (enemy.getPosition().x > 1120 && enemy.getPosition().x < 1124 && enemy.getPosition().y < 730)
+	else if (enemy.getPosition().x > 1120 * scale && enemy.getPosition().x < 1124 * scale && enemy.getPosition().y < 730 * scale)
 	{
-		this->setSpeed(2, 0);
+		this->setSpeed(2 * scale, 0 * scale);
 	}
-	else if (enemy.getPosition().x > 1434 && enemy.getPosition().x < 1438 && enemy.getPosition().y < 730)
+	else if (enemy.getPosition().x > 1434 * scale && enemy.getPosition().x < 1438 * scale && enemy.getPosition().y < 730 * scale)
 	{
-		this->setSpeed(0, 2);
+		this->setSpeed(0 * scale, 2 * scale);
 	}
-	else if (enemy.getPosition().x > 1434 && enemy.getPosition().x < 1438 && enemy.getPosition().y > 900)
+	else if (enemy.getPosition().x > 1434 * scale && enemy.getPosition().x < 1438 * scale && enemy.getPosition().y > 900 * scale)
 	{
-		this->setSpeed(2, 0);
+		this->setSpeed(2 * scale, 0 * scale);
 	}
 }
 

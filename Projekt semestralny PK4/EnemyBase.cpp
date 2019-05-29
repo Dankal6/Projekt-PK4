@@ -7,10 +7,10 @@ EnemyBase::EnemyBase(sf::Vector2f pos)
 	position = pos;
 	frame = 0;
 
-	base.setSize(sf::Vector2f(60.0f, 60.0f));
+	base.setSize(sf::Vector2f(60.0f*scale, 60.0f*scale));
 	base.setFillColor(sf::Color::Red);
 	base.setPosition(pos);
-	base.setOrigin(30, 30);
+	base.setOrigin(30 * scale, 30 * scale);
 }
 
 
