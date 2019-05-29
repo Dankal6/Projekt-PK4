@@ -91,6 +91,21 @@ bool Tower::isClicked(sf::Vector2f mousePosition)
 	}
 }
 
+sf::Vector2f Tower::returnPosition()
+{
+	return position;
+}
+
+void Tower::setPlace(PlaceForTower * new_place)
+{
+	place = new_place;
+}
+
+PlaceForTower * Tower::getPlace()
+{
+	return place;
+}
+
 void Tower::incrementFrame()
 {
 	this->frame++;

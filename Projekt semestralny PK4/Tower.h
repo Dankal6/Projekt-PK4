@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include <math.h>
 #include "Scale.h"
+#include "PlaceForTower.h"
 
 #include <iostream>
 
@@ -16,6 +17,7 @@ private:
 	sf::RenderWindow *window;
 	std::vector<Bullet*> Bullets;
 	sf::Texture towerTexture;
+	PlaceForTower* place;
 	int size = 140 * scale;
 	int range_rad = 200 * scale;
 	bool is_builded = false;
@@ -30,6 +32,9 @@ public:
 	void aim(Enemy*);
 	Enemy* check_if_in_range(std::vector<Enemy*>*);
 	bool isClicked(sf::Vector2f);
+	sf::Vector2f returnPosition();
+	void setPlace(PlaceForTower*);
+	PlaceForTower* getPlace();
 
 	std::vector<Bullet*> *returnBullets();
 	void incrementFrame();

@@ -156,7 +156,7 @@ int main()
 		{
 			e->drawEnemy(window);
 		}
-
+		towermanager.drawMenu();
 		window.display();
 	}
 
