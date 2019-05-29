@@ -24,8 +24,8 @@ public:
 	Tower(sf::RenderWindow*,sf::Vector2f);
 	~Tower();
 	void drawTower();
-	void drawBullets();
-	void shoot(Enemy*);
+	void shoot();
+	void aim(Enemy*);
 	Enemy* check_if_in_range(std::vector<Enemy*>*);
 	bool isClicked(sf::Vector2f);
 

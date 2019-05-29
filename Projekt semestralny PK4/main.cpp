@@ -27,6 +27,7 @@ int main()
 	int frame = 0;
 	bool start = false;
 	bool placing_tower = false;
+	bool game_paused = false;
 
 	vector<Tower*> Towers;
 	vector<Enemy*> Enemies;
@@ -68,19 +69,22 @@ int main()
 			//Tworze nowego przeciwnika
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
 			{
+				game_paused = false;
 				window.setFramerateLimit(60);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
 			{
+				game_paused = false;
 				window.setFramerateLimit(120);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
 			{
+				game_paused = false;
 				window.setFramerateLimit(240);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))
 			{
-				window.setFramerateLimit(0);
+				game_paused = true;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
@@ -97,52 +101,60 @@ int main()
 				window.draw(txt);
 			}
 		}
+		if (game_paused == false)
+		{
+
+			playerbase.check_if_enemy_in(&Enemies);
+			//rysowanie wiez
+			for (auto t : Towers)
+			{
+				t->shoot();
+				//sprawdzanie, czy jakis przecinik jest w zasiegu
+				Enemy *enemy_to_shoot = t->check_if_in_range(&Enemies);
+				if (enemy_to_shoot != NULL)
+				{
+					if (t->returnFrames() >= 10)
+					{
+						//wycelowanie
+						t->aim(enemy_to_shoot);
+						t->resetFrames();
+					}
+				}
+				//sprawdzanie, czy przeciwnik zostal trafiony
+				for (auto e : Enemies)
+				{
+					e->gotHitted(&Enemies, t->returnBullets(), &playerbase);
+				}
+			}
+			//start gry, przeciwnik rusza
+			if (start)
+			{
+				if (enemybase.returnFrames() >= 30)
+				{
+					enemybase.spawnEnemy(&Enemies);
+					enemybase.resetFrames();
+				}
+
+				for (auto e : Enemies)
+				{
+					e->move(deltaTime);
+				}
+			}
+		}
 		//rysowanie bazy gracza
 		playerbase.drawBase(&window);
 		enemybase.drawBase(window);
-		playerbase.check_if_enemy_in(&Enemies);
-		//rysowanie wiez
+		//rysowanie pociskow i wiez
 		for (auto t : Towers)
 		{
 			t->drawTower();
-			//sprawdzanie, czy jakis przecinik jest w zasiegu
-			Enemy *enemy_to_shoot = t->check_if_in_range(&Enemies);
-			if (enemy_to_shoot != NULL)
-			{
-				if (t->returnFrames() >= 10)
-				{
-					//wystrzal
-					t->shoot(enemy_to_shoot);
-					t->resetFrames();
-				}
-			}
-			//sprawdzanie, czy przeciwnik zostal trafiony
-			for (auto e : Enemies)
-			{
-				e->gotHitted(&Enemies, t->returnBullets(),&playerbase);
-			}
 		}
-		//rysowanie pociskow, w osobnej petli, aby byly narysowane "na" wiezach
-		for (auto t : Towers)
+		//rysowanie przeciwnikow
+		for (auto e : Enemies)
 		{
-			t->drawBullets();
+			e->drawEnemy(window);
 		}
 
-		//start gry, przeciwnik rusza
-		if (start)
-		{
-			if (enemybase.returnFrames() >= 30)
-			{
-				enemybase.spawnEnemy(&Enemies);
-				enemybase.resetFrames();
-			}
-
-			for (auto e : Enemies)
-			{
-				e->move(deltaTime);
-				e->drawEnemy(window);
-			}
-		}
 		window.display();
 	}
 

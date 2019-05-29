@@ -30,18 +30,21 @@ Tower::~Tower()
 void Tower::drawTower()
 {
 	window->draw(tower);
-}
-
-void Tower::drawBullets()
-{
 	for (auto b : Bullets)
 	{
 		b->drawBullet(window);
+	}
+}
+
+void Tower::shoot()
+{
+	for (auto b : Bullets)
+	{
 		b->move();
 	}
 }
 
-void Tower::shoot(Enemy *to_shoot)
+void Tower::aim(Enemy *to_shoot)
 {
 
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
