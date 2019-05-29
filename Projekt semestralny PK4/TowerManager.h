@@ -13,7 +13,8 @@ public:
 	TowerManager(Map*,std::vector<Tower*>*, sf::RenderWindow*);
 	~TowerManager();
 
-	void isPlaceClicked(sf::Vector2f);
-	void isTowerClicked(sf::Vector2f);
+	bool isPlaceClicked(sf::Vector2f);
+	bool isTowerClicked(sf::Vector2f);
+	void nothingClicked();
 };
 

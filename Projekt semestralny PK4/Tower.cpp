@@ -29,11 +29,20 @@ Tower::~Tower()
 
 void Tower::drawTower()
 {
+	if (this->showRange == true)
+	{
+		window->draw(range);
+	}
 	window->draw(tower);
 	for (auto b : Bullets)
 	{
 		b->drawBullet(window);
 	}
+}
+
+void Tower::drawRange(bool x)
+{
+	this->showRange = x;
 }
 
 void Tower::shoot()

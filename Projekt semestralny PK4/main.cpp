@@ -63,8 +63,10 @@ int main()
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
-				towermanager.isPlaceClicked(mousePos);
- 				towermanager.isTowerClicked(mousePos);
+				if (!towermanager.isTowerClicked(mousePos) && !towermanager.isPlaceClicked(mousePos))
+				{
+					towermanager.nothingClicked();
+				}
 			}
 			//Tworze nowego przeciwnika
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))

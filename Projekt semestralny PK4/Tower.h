@@ -19,11 +19,13 @@ private:
 	int size = 140 * scale;
 	int range_rad = 200 * scale;
 	bool is_builded = false;
+	int showRange = false;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
 public:
 	Tower(sf::RenderWindow*,sf::Vector2f);
 	~Tower();
 	void drawTower();
+	void drawRange(bool);
 	void shoot();
 	void aim(Enemy*);
 	Enemy* check_if_in_range(std::vector<Enemy*>*);

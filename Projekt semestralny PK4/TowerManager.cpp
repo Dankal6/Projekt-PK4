@@ -14,32 +14,44 @@ TowerManager::~TowerManager()
 {
 }
 
-void TowerManager::isPlaceClicked(sf::Vector2f mousePosition)
+bool TowerManager::isPlaceClicked(sf::Vector2f mousePosition)
 {
 	for (auto p : *placesForTowers)
 	{
-		if(p->returnSquare().getGlobalBounds().contains(mousePosition))
+		if (p->returnSquare().getGlobalBounds().contains(mousePosition))
 		{
-			if (p->isOccupied()==false)
+			if (p->isOccupied() == false)
 			{
 				p->returnSquare().setFillColor(sf::Color::Red);
 				Tower *tower = new Tower(window, p->returnSquare().getPosition());
 				Towers->push_back(tower);
 				p->setOccupied(true);
+				return true;
 			}
 		}
-
 	}
+	return false;
 }
 
-void TowerManager::isTowerClicked(sf::Vector2f mousePosition)
+bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 {
 	for (auto t : *Towers)
 	{
 		if (t->returnTower()->getGlobalBounds().contains(mousePosition))
 		{
 			//t->returnTower()->setFillColor(sf::Color::Red);
-
+			t->drawRange(true);
+			return true;
 		}
 	}
+	return false;
+}
+
+void TowerManager::nothingClicked()
+{
+	for (auto t : *Towers)
+	{
+		t->drawRange(false);
+	}
+
 }
