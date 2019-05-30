@@ -9,6 +9,9 @@ class TowerManager
 	std::vector<PlaceForTower*> *placesForTowers;
 	std::vector<Tower*> *Towers;
 	sf::RenderWindow *window;
+	sf::Font ttf;
+	sf::Text towerLevel;
+
 	sf::CircleShape buttonX;
 	sf::Texture buttonXTexture;
 	sf::CircleShape buttonUpgrade;
@@ -26,5 +29,6 @@ public:
 	void drawMenu();
 	void sellTower(Tower*);
 	void upgradeTower(Tower*);
+	void showTowerLevel(Tower*);
 };
 

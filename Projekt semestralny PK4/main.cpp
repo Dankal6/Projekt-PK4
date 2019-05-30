@@ -63,7 +63,7 @@ int main()
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);
-				if (!towermanager.isTowerClicked(mousePos) && !towermanager.isPlaceClicked(mousePos))
+				if (!towermanager.isPlaceClicked(mousePos) && !towermanager.isTowerClicked(mousePos))
 				{
 					towermanager.nothingClicked();
 				}

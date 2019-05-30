@@ -25,6 +25,7 @@ private:
 	bool is_builded = false;
 	int showRange = false;
 	int damage;
+	int upgradeLevel;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
 public:
 	Tower(sf::RenderWindow*,sf::Vector2f);
@@ -41,6 +42,8 @@ public:
 
 	int returnDamage();
 	void setDamage(int);
+	int returnLevel();
+	void setLevel(int);
 
 	std::vector<Bullet*> *returnBullets();
 	void incrementFrame();

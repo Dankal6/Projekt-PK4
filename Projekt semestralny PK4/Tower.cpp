@@ -10,6 +10,7 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	tower.setOrigin((size/2), (size-(40*scale)));
 	tower.setPosition(position);
 	damage = 5;
+	upgradeLevel = 0;
 
 	range.setRadius(range_rad);
 	range.setOrigin(range_rad, range_rad);
@@ -140,6 +141,16 @@ int Tower::returnDamage()
 void Tower::setDamage(int x)
 {
 	damage = x;
+}
+
+int Tower::returnLevel()
+{
+	return upgradeLevel;
+}
+
+void Tower::setLevel(int x)
+{
+	upgradeLevel = x;
 }
 
 std::vector<Bullet*> *Tower::returnBullets()
