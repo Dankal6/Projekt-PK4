@@ -11,6 +11,10 @@ class TowerManager
 	sf::RenderWindow *window;
 	sf::CircleShape buttonX;
 	sf::Texture buttonXTexture;
+	sf::CircleShape buttonUpgrade;
+	sf::Texture buttonUpgradeTexture;
+	sf::CircleShape buttonY;
+	sf::Texture buttonYTexture;
 	Tower* managedTower;
 public:
 	TowerManager(Map*,std::vector<Tower*>*, sf::RenderWindow*);
@@ -21,5 +25,6 @@ public:
 	void nothingClicked();
 	void drawMenu();
 	void sellTower(Tower*);
+	void upgradeTower(Tower*);
 };
 

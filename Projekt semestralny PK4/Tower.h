@@ -8,6 +8,8 @@
 
 #include <iostream>
 
+class Enemy;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
+
 class Tower
 {
 private:
@@ -22,6 +24,7 @@ private:
 	int range_rad = 200 * scale;
 	bool is_builded = false;
 	int showRange = false;
+	int damage;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
 public:
 	Tower(sf::RenderWindow*,sf::Vector2f);
@@ -35,6 +38,9 @@ public:
 	sf::Vector2f returnPosition();
 	void setPlace(PlaceForTower*);
 	PlaceForTower* getPlace();
+
+	int returnDamage();
+	void setDamage(int);
 
 	std::vector<Bullet*> *returnBullets();
 	void incrementFrame();

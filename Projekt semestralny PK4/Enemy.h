@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Bullet.h"
+#include "Tower.h"
 #include "PlayerBase.h"
 #include <iostream>
 #include "Animation.h"
 #include "Scale.h"
 
 class PlayerBase;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
+class Tower;
 
 class Enemy
 {
@@ -28,7 +29,7 @@ public:
 	void setSpeed(float, float);
 	sf::Vector2f returnSpeed();
 	sf::Vector2f getPosition();
-	bool gotHitted(std::vector<Enemy*> *, std::vector<Bullet*>*,PlayerBase*);
+	bool gotHitted(std::vector<Enemy*> *, Tower*,PlayerBase*);
 	double returnHealthAsPercent();
 };
 

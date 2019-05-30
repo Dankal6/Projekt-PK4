@@ -91,7 +91,7 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
 				start = true;
-				enemybase.setToSpawn(5);
+				enemybase.setToSpawn(500);
 				//prowizoryczne poki co wyswietlanie Start
 				sf::Font ttf;
 				ttf.loadFromFile("fonts/font.ttf");
@@ -125,7 +125,7 @@ int main()
 				//sprawdzanie, czy przeciwnik zostal trafiony
 				for (auto e : Enemies)
 				{
-					e->gotHitted(&Enemies, t->returnBullets(), &playerbase);
+					e->gotHitted(&Enemies, t, &playerbase);
 				}
 			}
 			//start gry, przeciwnik rusza

@@ -13,6 +13,18 @@ TowerManager::TowerManager(Map *map, std::vector<Tower*> *_Towers, sf::RenderWin
 	buttonX.setTexture(&buttonXTexture);
 	buttonX.setOrigin(20 * scale, 20 * scale);
 
+	buttonUpgrade.setRadius(20 * scale);
+	buttonUpgradeTexture.loadFromFile("Textures/upgrade.png");
+	buttonUpgradeTexture.setSmooth(true);
+	buttonUpgrade.setTexture(&buttonUpgradeTexture);
+	buttonUpgrade.setOrigin(20 * scale, 20 * scale);
+
+	buttonY.setRadius(20 * scale);
+	buttonYTexture.loadFromFile("Textures/Y.png");
+	buttonYTexture.setSmooth(true);
+	buttonY.setTexture(&buttonYTexture);
+	buttonY.setOrigin(20 * scale, 20 * scale);
+
 }
 
 
@@ -46,6 +58,10 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 	{
 		sellTower(managedTower);
 	}
+	if (buttonUpgrade.getGlobalBounds().contains(mousePosition))
+	{
+		upgradeTower(managedTower);
+	}
 	for (auto t : *Towers)
 	{
 		if (t->returnTower()->getGlobalBounds().contains(mousePosition))
@@ -54,6 +70,7 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 			managedTower = t;
 			t->drawRange(true);
 			buttonX.setPosition(t->returnPosition().x + (60 * scale), t->returnPosition().y - (40*scale));
+			buttonUpgrade.setPosition(t->returnPosition().x - (60 * scale), t->returnPosition().y - (40 * scale));
 			return true;
 		}
 	}
@@ -66,6 +83,7 @@ void TowerManager::nothingClicked()
 	{
 		t->drawRange(false);
 		buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
+		buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 	}
 
 }
@@ -73,6 +91,7 @@ void TowerManager::nothingClicked()
 void TowerManager::drawMenu()
 {
 	window->draw(buttonX);
+	window->draw(buttonUpgrade);
 }
 
 void TowerManager::sellTower(Tower* toSell)
@@ -84,7 +103,14 @@ void TowerManager::sellTower(Tower* toSell)
 		{
 			t->getPlace()->setOccupied(false);
 			Towers->erase(Towers->begin() + i);
+			buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
+			buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		}
 		i++;
 	}
+}
+
+void TowerManager::upgradeTower(Tower * tower)
+{
+	tower->setDamage(tower->returnDamage() + 5);
 }

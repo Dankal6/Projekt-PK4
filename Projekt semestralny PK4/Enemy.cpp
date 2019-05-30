@@ -125,7 +125,7 @@ sf::Vector2f Enemy::returnSpeed()
 	return this->speed;
 }
 
-bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullets, PlayerBase *player)
+bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, Tower* tower, PlayerBase *player)
 {
 	int i = 0;
 	for (auto e : *Enemies)
@@ -137,17 +137,16 @@ bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, std::vector<Bullet*> *Bullet
 		i++;
 	}
 	int j = 0;
-	for (auto b : *Bullets)
+	for (auto b : *tower->returnBullets())
 	{
-		//if (enemy.getGlobalBounds().contains(b->returnPosition))
 		sf::Vector2f bullet_pos = b->returnPosition();
 		float x = bullet_pos.x;
 		float y = bullet_pos.y;
 		if (enemy.getGlobalBounds().contains(x, y))
 		{
-  			this->healthPointLeft -= 15;
+			this->healthPointLeft -= tower->returnDamage();
 			this->healthBar.setSize(sf::Vector2f(this->returnHealthAsPercent()*this->enemy.getSize().x, 2.0f));
-			Bullets->erase(Bullets->begin()+j);
+			tower->returnBullets()->erase(tower->returnBullets()->begin()+j);
 			if (this->healthPointLeft <= 0)
 			{
 				Enemies->erase(Enemies->begin() + i);  

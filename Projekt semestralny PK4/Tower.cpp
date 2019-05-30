@@ -9,6 +9,7 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	tower.setSize(sf::Vector2f(size, size));
 	tower.setOrigin((size/2), (size-(40*scale)));
 	tower.setPosition(position);
+	damage = 5;
 
 	range.setRadius(range_rad);
 	range.setOrigin(range_rad, range_rad);
@@ -129,6 +130,16 @@ sf::RectangleShape * Tower::returnTower()
 void Tower::actionWithTower()
 {
 	this->tower.setFillColor(sf::Color::Red);
+}
+
+int Tower::returnDamage()
+{
+	return damage;
+}
+
+void Tower::setDamage(int x)
+{
+	damage = x;
 }
 
 std::vector<Bullet*> *Tower::returnBullets()

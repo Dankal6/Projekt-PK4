@@ -5,6 +5,7 @@ class Bullet
 private:
 	sf::CircleShape bullet;
 	sf::Vector2f speed;
+	int damage;
 public:
 	Bullet(sf::Vector2f);
 	~Bullet();
@@ -12,5 +13,6 @@ public:
 	void move();
 	void drawBullet(sf::RenderWindow*);
 	sf::Vector2f returnPosition();
+
 };
 
