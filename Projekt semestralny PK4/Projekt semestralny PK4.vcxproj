@@ -140,7 +140,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="Map.cpp" />
-    <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PlaceForTower.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
     <ClCompile Include="Scale.cpp" />
@@ -153,7 +152,6 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyBase.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="PlaceForTower.h" />
     <ClInclude Include="PlayerBase.h" />
     <ClInclude Include="Scale.h" />

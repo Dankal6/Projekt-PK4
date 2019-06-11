@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Scale.h"
+#include <iostream>
 
 class PlaceForTower
 {

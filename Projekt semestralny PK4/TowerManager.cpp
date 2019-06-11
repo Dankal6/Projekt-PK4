@@ -2,7 +2,7 @@
 
 
 
-TowerManager::TowerManager(Map *map, std::vector<Tower*> *_Towers, sf::RenderWindow *_window)
+TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Towers, sf::RenderWindow *_window)
 {
 	placesForTowers = map->returnPlaces();
 	Towers = _Towers;
@@ -49,7 +49,8 @@ bool TowerManager::isPlaceClicked(sf::Vector2f mousePosition)
 			if (p->isOccupied() == false)
 			{
 				p->returnSquare().setFillColor(sf::Color::Red);
-				Tower *tower = new Tower(window, p->returnSquare().getPosition());
+				std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, p->returnSquare().getPosition());
+				//Tower *tower = new Tower(window, p->returnSquare().getPosition());
 				tower->setPlace(p);
 				Towers->push_back(tower);
 				p->setOccupied(true);
@@ -112,7 +113,7 @@ void TowerManager::drawMenu()
 	window->draw(towerLevel);
 }
 
-void TowerManager::sellTower(Tower* toSell)
+void TowerManager::sellTower(std::shared_ptr<Tower> toSell)
 {
 	int i = 0;
 	for (auto t : *Towers)
@@ -123,18 +124,20 @@ void TowerManager::sellTower(Tower* toSell)
 			Towers->erase(Towers->begin() + i);
 			buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 			buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
+			managedTower = NULL;
+			return;
 		}
 		i++;
 	}
 }
 
-void TowerManager::upgradeTower(Tower * tower)
+void TowerManager::upgradeTower(std::shared_ptr<Tower> tower)
 {
 	tower->setDamage(tower->returnDamage() + 5);
 	tower->setLevel(tower->returnLevel()+1);
 }
 
-void TowerManager::showTowerLevel(Tower *managedTower)
+void TowerManager::showTowerLevel(std::shared_ptr<Tower> managedTower)
 {
 	std::string s = std::to_string(managedTower->returnLevel());
 	towerLevel.setString(s);

@@ -16,7 +16,7 @@ PlayerBase::~PlayerBase()
 {
 }
 
-void PlayerBase::check_if_enemy_in(std::vector<Enemy*> *Enemies)
+void PlayerBase::check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *Enemies)
 {
 	int i = 0;
 	for (auto e : *Enemies)

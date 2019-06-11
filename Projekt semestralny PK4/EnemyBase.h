@@ -9,12 +9,12 @@ private:
 	sf::RectangleShape base;
 	int toSpawn;
 	int frame;	//prowizoryczna czestotliwosc tworzenia przeciwnikow
-	std::vector<Enemy*> Enemies;
+	std::vector<std::shared_ptr<Enemy>> Enemies;
 
 public:
 	EnemyBase(sf::Vector2f);
 	~EnemyBase();
-	void spawnEnemy(std::vector<Enemy*>*);
+	void spawnEnemy(std::vector<std::shared_ptr<Enemy>>*);
 	void setToSpawn(int);
 	void drawBase(sf::RenderWindow&);
 

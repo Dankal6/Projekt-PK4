@@ -15,7 +15,7 @@ private:
 public:
 	PlayerBase(sf::Vector2f);
 	~PlayerBase();
-	void check_if_enemy_in(std::vector<Enemy*> *);
+	void check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *);
 	void gameOver(sf::RenderWindow*);
 	void drawBase(sf::RenderWindow*);
 	void addPoints(int);

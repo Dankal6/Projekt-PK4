@@ -1,6 +1,6 @@
 #include "PlaceForTower.h"
 
-
+int how_many_places = 0;
 
 PlaceForTower::PlaceForTower(int x, int y)
 {
@@ -13,6 +13,8 @@ PlaceForTower::PlaceForTower(int x, int y)
 	placeForTower.setOrigin(40 * scale, 40 * scale);
 	placeForTower.setPosition(x, y);
 	occupied = false;
+
+	how_many_places++;
 
 	/*
 	sf::RectangleShape* p1 = new sf::RectangleShape;
@@ -92,6 +94,8 @@ PlaceForTower::PlaceForTower(int x, int y)
 
 PlaceForTower::~PlaceForTower()
 {
+	how_many_places--;
+	std::cout << "Destroy place, remain: " << how_many_places << std::endl;
 }
 
 sf::RectangleShape PlaceForTower::returnSquare()

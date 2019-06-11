@@ -18,11 +18,11 @@ EnemyBase::~EnemyBase()
 {
 }
 
-void EnemyBase::spawnEnemy(std::vector<Enemy*>*Enemies)
+void EnemyBase::spawnEnemy(std::vector<std::shared_ptr<Enemy>> *Enemies)
 {
 	if(this->toSpawn>0)
 	{
-		Enemy *enemy = new Enemy(position);
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position);
 		Enemies->push_back(enemy);
 		this->toSpawn--;
 	}

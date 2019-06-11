@@ -6,6 +6,8 @@
 #include "Scale.h"
 #include "PlaceForTower.h"
 
+#include <memory>
+
 #include <iostream>
 
 class Enemy;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
@@ -17,9 +19,9 @@ private:
 	sf::CircleShape range;
 	sf::Vector2f position;
 	sf::RenderWindow *window;
-	std::vector<Bullet*> Bullets;
+	std::vector<std::shared_ptr<Bullet>> Bullets;
 	sf::Texture towerTexture;
-	PlaceForTower* place;
+	std::shared_ptr<PlaceForTower> place;
 	int size = 140 * scale;
 	int range_rad = 200 * scale;
 	bool is_builded = false;
@@ -33,19 +35,20 @@ public:
 	void drawTower();
 	void drawRange(bool);
 	void shoot();
-	void aim(Enemy*);
-	Enemy* check_if_in_range(std::vector<Enemy*>*);
+	void aim(std::shared_ptr<Enemy>);
+	std::shared_ptr<Enemy> check_if_in_range(std::vector<std::shared_ptr<Enemy>>*);
 	bool isClicked(sf::Vector2f);
 	sf::Vector2f returnPosition();
-	void setPlace(PlaceForTower*);
-	PlaceForTower* getPlace();
+	void setPlace(std::shared_ptr<PlaceForTower>);
+	std::shared_ptr<PlaceForTower> getPlace();
 
 	int returnDamage();
 	void setDamage(int);
 	int returnLevel();
 	void setLevel(int);
 
-	std::vector<Bullet*> *returnBullets();
+	std::vector<std::shared_ptr<Bullet>> *returnBullets();
+	void bullets_out_of_range();
 	void incrementFrame();
 	int returnFrames();
 	void resetFrames();

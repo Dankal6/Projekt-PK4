@@ -29,7 +29,7 @@ public:
 	void setSpeed(float, float);
 	sf::Vector2f returnSpeed();
 	sf::Vector2f getPosition();
-	bool gotHitted(std::vector<Enemy*> *, Tower*,PlayerBase*);
+	bool gotHitted(std::vector<std::shared_ptr<Enemy>> *, std::shared_ptr<Tower>,PlayerBase*);
 	double returnHealthAsPercent();
 };
 

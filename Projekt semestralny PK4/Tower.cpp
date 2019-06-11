@@ -1,6 +1,6 @@
 #include "Tower.h"
 
-
+int how_many_towers=0;
 
 Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 {
@@ -21,11 +21,14 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
 	tower.setTexture(&towerTexture);
 
 	this->frame = 0;
+	how_many_towers++;
 }
 
 
 Tower::~Tower()
 {
+	how_many_towers--;
+	std::cout << "Destroy tower, remain: " << how_many_towers << std::endl;
 }
 
 
@@ -36,6 +39,7 @@ void Tower::drawTower()
 		window->draw(range);
 	}
 	window->draw(tower);
+	this->bullets_out_of_range();	//usuwanie pociskow poza zasiegiem wiezy
 	for (auto b : Bullets)
 	{
 		b->drawBullet(window);
@@ -55,19 +59,17 @@ void Tower::shoot()
 	}
 }
 
-void Tower::aim(Enemy *to_shoot)
+void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 {
 
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
 	sf::Vector2f enemy_speed = to_shoot->returnSpeed();
-	Bullet *bullet = new Bullet(this->position);
+	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(this->position);
 	bullet->setSpeed((enemy_pos.x - this->position.x) / 30 + enemy_speed.x, (enemy_pos.y - this->position.y) / 30 + enemy_speed.y);
-	//std::cout << "Predkosc pocisku x: " << (enemy_pos.x - this->position.x) / 50 <<
-	//	" y : " << (enemy_pos.y - this->position.y) / 50 << std::endl;
 	Bullets.push_back(bullet);
 }
 
-Enemy* Tower::check_if_in_range(std::vector<Enemy*> *Enemies)
+std::shared_ptr<Enemy> Tower::check_if_in_range(std::vector<std::shared_ptr<Enemy>> *Enemies)
 {
 	float d;
 
@@ -98,12 +100,12 @@ sf::Vector2f Tower::returnPosition()
 	return position;
 }
 
-void Tower::setPlace(PlaceForTower * new_place)
+void Tower::setPlace(std::shared_ptr<PlaceForTower> new_place)
 {
 	place = new_place;
 }
 
-PlaceForTower * Tower::getPlace()
+std::shared_ptr<PlaceForTower> Tower::getPlace()
 {
 	return place;
 }
@@ -153,7 +155,29 @@ void Tower::setLevel(int x)
 	upgradeLevel = x;
 }
 
-std::vector<Bullet*> *Tower::returnBullets()
+std::vector<std::shared_ptr<Bullet>> *Tower::returnBullets()
 {
 	return &this->Bullets;
+}
+
+void Tower::bullets_out_of_range()
+{
+	int j = 0;
+	for (auto b : Bullets)
+	{
+		sf::Vector2f bullet_pos = b->returnPosition();
+		float x = bullet_pos.x;
+		float y = bullet_pos.y;
+		if (range.getGlobalBounds().contains(x, y))
+		{
+			j++;
+			continue;
+		}
+		else
+		{
+			Bullets.erase(Bullets.begin() + j);
+			return;
+		}
+
+	}
 }

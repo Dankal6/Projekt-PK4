@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-
+int how_many_enemies = 0;
 
 Enemy::Enemy(sf::Vector2f pos)
 {
@@ -23,11 +23,15 @@ Enemy::Enemy(sf::Vector2f pos)
 	enemy.setTexture(&enemyTexture);
 	animation = new Animation(&enemyTexture, sf::Vector2u(3, 4), 0.3);
 
+	how_many_enemies++;
+
 }
 
 
 Enemy::~Enemy()
 {
+	how_many_enemies--;
+	//std::cout << "Destroy enemy, remain: " << how_many_enemies << std::endl;
 }
 
 void Enemy::drawEnemy(sf::RenderWindow& window)
@@ -39,13 +43,13 @@ void Enemy::drawEnemy(sf::RenderWindow& window)
 void Enemy::move(float deltaTime)
 {
 	//czesc odpowiedzialna za animacje
-	if(speed.x==0 && speed.y > 0)
+	if (speed.x == 0 && speed.y > 0)
 		animation->Update(0, deltaTime);
-	else if(speed.x == 0 && speed.y <0)
+	else if (speed.x == 0 && speed.y < 0)
 		animation->Update(3, deltaTime);
-	else if(speed.x>0)
+	else if (speed.x > 0)
 		animation->Update(2, deltaTime);
-	else if(speed.x < 0)
+	else if (speed.x < 0)
 		animation->Update(1, deltaTime);
 	enemy.setTextureRect(animation->uvRect);
 
@@ -125,12 +129,12 @@ sf::Vector2f Enemy::returnSpeed()
 	return this->speed;
 }
 
-bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, Tower* tower, PlayerBase *player)
+bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_ptr<Tower> tower, PlayerBase *player)
 {
 	int i = 0;
 	for (auto e : *Enemies)
 	{
-	if (e->getPosition() == this->getPosition())
+		if (e->getPosition() == this->getPosition())
 		{
 			break;
 		}
@@ -146,18 +150,19 @@ bool Enemy::gotHitted(std::vector<Enemy*> *Enemies, Tower* tower, PlayerBase *pl
 		{
 			this->healthPointLeft -= tower->returnDamage();
 			this->healthBar.setSize(sf::Vector2f(this->returnHealthAsPercent()*this->enemy.getSize().x, 2.0f));
-			tower->returnBullets()->erase(tower->returnBullets()->begin()+j);
+			tower->returnBullets()->erase(tower->returnBullets()->begin() + j);
 			if (this->healthPointLeft <= 0)
 			{
-				Enemies->erase(Enemies->begin() + i);  
+				Enemies->erase(Enemies->begin() + i);
 				std::cout << "Padl przeciwnik: " << i << ", pozostalo przeciwnikow: " << Enemies->size() << std::endl;
 				player->addPoints(1);
+				return true;
 			}
-			return true;
+			return false;
 		}
 		j++;
 	}
-} 
+}
 
 double Enemy::returnHealthAsPercent()
 {

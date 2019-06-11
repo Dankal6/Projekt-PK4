@@ -29,8 +29,8 @@ int main()
 	bool placing_tower = false;
 	bool game_paused = false;
 
-	vector<Tower*> Towers;
-	vector<Enemy*> Enemies;
+	vector<std::shared_ptr<Tower>> Towers;
+	vector<std::shared_ptr<Enemy>> Enemies;
 	Map map;
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
 	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
@@ -112,7 +112,8 @@ int main()
 			{
 				t->shoot();
 				//sprawdzanie, czy jakis przecinik jest w zasiegu
-				Enemy *enemy_to_shoot = t->check_if_in_range(&Enemies);
+				shared_ptr<Enemy> enemy_to_shoot = make_shared<Enemy>(t->returnPosition());
+				enemy_to_shoot = t->check_if_in_range(&Enemies);
 				if (enemy_to_shoot != NULL)
 				{
 					if (t->returnFrames() >= 10)
@@ -125,7 +126,10 @@ int main()
 				//sprawdzanie, czy przeciwnik zostal trafiony
 				for (auto e : Enemies)
 				{
-					e->gotHitted(&Enemies, t, &playerbase);
+					bool x = e->gotHitted(&Enemies, t, &playerbase);
+					//gotHitted zwraca true gry przecniwnik zginie i zostanie usuniety z wektora, dlatego po usunieciu wychodze z petli
+					if (x == true)
+						break;		
 				}
 			}
 			//start gry, przeciwnik rusza
