@@ -29,8 +29,9 @@ TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Tower
 	ttf.loadFromFile("fonts/font.ttf");
 	towerLevel.setFont(ttf);
 	towerLevel.setString("0");
-	towerLevel.setCharacterSize(200);
-	towerLevel.setFillColor(sf::Color::Red);
+	towerLevel.setCharacterSize(100);
+	towerLevel.setOrigin(25, 25);
+	towerLevel.setFillColor(sf::Color::Black);
 	towerLevel.setPosition(-100,-100);
 
 }
@@ -100,6 +101,7 @@ void TowerManager::nothingClicked()
 		t->drawRange(false);
 		buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
+		towerLevel.setPosition(-100, -100);
 	}
 
 }

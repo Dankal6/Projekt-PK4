@@ -2,14 +2,11 @@
 
 
 
+
 Map::Map()
 {
 	map.setSize(sf::Vector2f(1920.0f*scale, 1080.0f*scale));
 	map.setPosition(0, 0);
-	mapTexture.loadFromFile("Textures/Grass1.png");
-	mapTexture.setSmooth(true);
-	map.setTexture(&mapTexture);
-	generatePlaces();
 }
 
 
@@ -66,6 +63,28 @@ void Map::generatePlaces()
 	placesForTowers.push_back(p17);
 	std::shared_ptr<PlaceForTower> p18= std::make_shared<PlaceForTower>(471 * scale, 68 * scale);
 	placesForTowers.push_back(p18);
+}
+
+bool Map::setMapTexture()
+{
+	try
+	{
+		bool a = mapTexture.loadFromFile("Textures/Grass1.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Did not found map texture!";
+			throw wyjatek;
+		}
+		mapTexture.setSmooth(true);
+		map.setTexture(&mapTexture);
+		generatePlaces();
+		return true;
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		return false;
+	}
 }
 
 std::vector<std::shared_ptr<PlaceForTower>> * Map::returnPlaces()

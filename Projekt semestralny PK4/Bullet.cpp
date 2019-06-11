@@ -5,9 +5,12 @@ int how_many_bullets = 0;
 
 Bullet::Bullet(sf::Vector2f pos)
 {
-	bullet.setRadius(5);
-	bullet.setFillColor(sf::Color::Yellow);
+	bullet.setSize(sf::Vector2f(10.0f*scale, 35.0f*scale));
 	bullet.setPosition(pos);
+
+	bulletTexture.loadFromFile("Textures/arrow.png");
+	bulletTexture.setSmooth(true);
+	bullet.setTexture(&bulletTexture);
 	how_many_bullets++;
 }
 
@@ -21,6 +24,11 @@ Bullet::~Bullet()
 void Bullet::setSpeed(float x, float y)
 {
 	this->speed = { x,y };
+}
+
+void Bullet::setRotation(float x)
+{
+	bullet.setRotation(x);
 }
 
 void Bullet::move()

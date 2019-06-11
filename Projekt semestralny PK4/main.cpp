@@ -32,6 +32,11 @@ int main()
 	vector<std::shared_ptr<Tower>> Towers;
 	vector<std::shared_ptr<Enemy>> Enemies;
 	Map map;
+	bool a = map.setMapTexture();
+	if (a == false)
+	{
+		return 0;
+	}
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
 	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
 	TowerManager towermanager(&map, &Towers,&window);
@@ -116,7 +121,7 @@ int main()
 				enemy_to_shoot = t->check_if_in_range(&Enemies);
 				if (enemy_to_shoot != NULL)
 				{
-					if (t->returnFrames() >= 10)
+					if (t->returnFrames() >= 20)
 					{
 						//wycelowanie
 						t->aim(enemy_to_shoot);

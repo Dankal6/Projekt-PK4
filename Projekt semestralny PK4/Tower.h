@@ -5,6 +5,7 @@
 #include <math.h>
 #include "Scale.h"
 #include "PlaceForTower.h"
+#include <cmath>
 
 #include <memory>
 
@@ -22,7 +23,7 @@ private:
 	std::vector<std::shared_ptr<Bullet>> Bullets;
 	sf::Texture towerTexture;
 	std::shared_ptr<PlaceForTower> place;
-	int size = 140 * scale;
+	int size = 130 * scale;
 	int range_rad = 200 * scale;
 	bool is_builded = false;
 	int showRange = false;

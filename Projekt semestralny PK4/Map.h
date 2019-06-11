@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <string>
+#include <iostream>
 #include "PlaceForTower.h"
 #include "Scale.h"
 
@@ -18,6 +20,7 @@ public:
 	~Map();
 	void drawMap(sf::RenderWindow&);
 	void generatePlaces();
+	bool setMapTexture();
 	std::vector<std::shared_ptr<PlaceForTower>> *returnPlaces();
 	//do wykorzystania przy algorytmie wyszukiwania drogi
 	//void initMapAsSquares();
