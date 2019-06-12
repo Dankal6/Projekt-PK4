@@ -2,22 +2,33 @@
 
 int how_many_towers = 0;
 
-Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos)
+Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos, int _type)
 {
 	window = main_window;
 	position = pos;
+	type = _type;
 	tower.setSize(sf::Vector2f(size - (50 * scale), size));
 	tower.setOrigin(((size - (50 * scale)) / 2), (size - (40 * scale)));
 	tower.setPosition(position);
-	damage = 5;
 	upgradeLevel = 0;
 
-	range.setRadius(range_rad);
-	range.setOrigin(range_rad, range_rad);
+	if (type == 1)
+	{
+		range.setRadius(range_rad);
+		range.setOrigin(range_rad, range_rad);
+		towerTexture.loadFromFile("Textures/tower1.png");
+		damage = 5;
+	}
+	else if (type == 2)
+	{
+		range.setRadius(range_rad - (50 * scale));
+		range.setOrigin(range_rad - (50 * scale), range_rad - (50 * scale));
+		towerTexture.loadFromFile("Textures/tower2.png");
+		damage = 10;
+	}
+
 	range.setPosition(position);
 	range.setFillColor(sf::Color(50, 50, 50, 128));
-
-	towerTexture.loadFromFile("Textures/tower1.png");
 	towerTexture.setSmooth(true);
 	tower.setTexture(&towerTexture);
 
@@ -65,7 +76,15 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
 	sf::Vector2f enemy_speed = to_shoot->returnSpeed();
-	std::shared_ptr<Bullet> bullet = std::make_shared<Bullet>(this->position);
+	std::shared_ptr<Bullet> bullet;
+	if (this->type == 1)
+	{
+		bullet = std::make_shared<Bullet>(this->position, type);
+	}
+	else if (this->type == 2)
+	{
+		bullet = std::make_shared<Bullet>(this->position, type);
+	}
 	bullet->setSpeed((enemy_pos.x - this->position.x) / 20 + enemy_speed.x, (enemy_pos.y - this->position.y) / 20 + enemy_speed.y);
 	double a = sqrt(pow(enemy_pos.x - this->position.x + enemy_speed.x, 2) + pow(enemy_pos.y - this->position.y, 2));
 	double b = sqrt(pow(enemy_pos.x - this->position.x + enemy_speed.x, 2));
@@ -73,16 +92,16 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 	double rad = asin(sin);
 	double degrees = rad * (180.0 / 3.141592653589793238463);
 	//przeciwnik po lewej, wyzej
-	if ((enemy_pos.x - this->posit0ion.x) < 0 && (enemy_pos.y - this->position.y) < 0)
+	if ((enemy_pos.x - this->position.x) < 0 && (enemy_pos.y - this->position.y) < 0)
 		bullet->setRotation(360 - degrees);
 	//przeciwnik po prawej, wyzej
-	else if((enemy_pos.y - this->position.y)<0 && (enemy_pos.x - this->position.x) > 0)
+	else if ((enemy_pos.y - this->position.y) < 0 && (enemy_pos.x - this->position.x) > 0)
 		bullet->setRotation(degrees);
 	//przeciwnik po lewej, nizej
-	else if((enemy_pos.y - this->position.y) > 0 && (enemy_pos.x - this->position.x) < 0)
+	else if ((enemy_pos.y - this->position.y) > 0 && (enemy_pos.x - this->position.x) < 0)
 		bullet->setRotation(180 + degrees);
 	//przeciwnik po prawej, nizej
-	else 
+	else
 		bullet->setRotation(180 - degrees);
 	Bullets.push_back(bullet);
 }

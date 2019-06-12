@@ -22,7 +22,9 @@ private:
 	sf::RenderWindow *window;
 	std::vector<std::shared_ptr<Bullet>> Bullets;
 	sf::Texture towerTexture;
+	sf::Texture tower2Texture;
 	std::shared_ptr<PlaceForTower> place;
+	int type;
 	int size = 130 * scale;
 	int range_rad = 200 * scale;
 	bool is_builded = false;
@@ -31,7 +33,7 @@ private:
 	int upgradeLevel;
 	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
 public:
-	Tower(sf::RenderWindow*,sf::Vector2f);
+	Tower(sf::RenderWindow*,sf::Vector2f,int);
 	~Tower();
 	void drawTower();
 	void drawRange(bool);

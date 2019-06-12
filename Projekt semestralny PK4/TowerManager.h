@@ -18,13 +18,20 @@ class TowerManager
 	sf::Texture buttonUpgradeTexture;
 	sf::CircleShape buttonY;
 	sf::Texture buttonYTexture;
+	sf::CircleShape buttonArrow;
+	sf::Texture buttonArrowTexture;
+	sf::CircleShape buttonFireball;
+	sf::Texture buttonFireballTexture;
+
 	std::shared_ptr<Tower> managedTower;
+	std::shared_ptr<PlaceForTower> managedPlace;
 public:
-	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*, sf::RenderWindow*);
+	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*,sf::RenderWindow*);
 	~TowerManager();
 
 	bool isPlaceClicked(sf::Vector2f);
 	bool isTowerClicked(sf::Vector2f);
+	void isNewTowerClicked(sf::Vector2f);
 	void nothingClicked();
 	void drawMenu();
 	void sellTower(std::shared_ptr<Tower>);

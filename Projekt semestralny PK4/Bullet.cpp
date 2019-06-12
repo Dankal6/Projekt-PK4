@@ -3,12 +3,23 @@
 //sprawdzanie wyciekow pamieci
 int how_many_bullets = 0;
 
-Bullet::Bullet(sf::Vector2f pos)
+Bullet::Bullet(sf::Vector2f pos,int type)
 {
-	bullet.setSize(sf::Vector2f(10.0f*scale, 35.0f*scale));
+
 	bullet.setPosition(pos);
 
-	bulletTexture.loadFromFile("Textures/arrow.png");
+	if (type == 1)
+	{
+		bulletTexture.loadFromFile("Textures/arrow.png");
+		bullet.setSize(sf::Vector2f(10.0f*scale, 35.0f*scale));
+	}
+	else if (type == 2)
+
+	{
+		bulletTexture.loadFromFile("Textures/fireball.png");
+		bullet.setSize(sf::Vector2f(20.0f*scale, 20.0f*scale));
+	}
+
 	bulletTexture.setSmooth(true);
 	bullet.setTexture(&bulletTexture);
 	how_many_bullets++;

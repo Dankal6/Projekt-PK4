@@ -4,7 +4,7 @@ int how_many_places = 0;
 
 PlaceForTower::PlaceForTower(int x, int y)
 {
-
+	position = sf::Vector2f(x, y);
 	placeSize = sf::Vector2f(80 * scale, 80 * scale);
 	placeForTowerTexture.loadFromFile("Textures/placeTowerGrass.png");
 	placeForTowerTexture.setSmooth(true);
@@ -101,6 +101,11 @@ PlaceForTower::~PlaceForTower()
 sf::RectangleShape PlaceForTower::returnSquare()
 {
 	return placeForTower;
+}
+
+sf::Vector2f PlaceForTower::returnPosition()
+{
+	return position;
 }
 
 void PlaceForTower::setOccupied(bool x)

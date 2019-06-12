@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "TowerManager.h"
 #include "Scale.h"
+#include "Menu.h"
 
 using namespace std;
 
@@ -40,8 +41,9 @@ int main()
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
 	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
 	TowerManager towermanager(&map, &Towers,&window);
+	Menu menu(&window);
 
-
+	menu.action(map);
 
 	while (window.isOpen())
 	{
@@ -50,6 +52,7 @@ int main()
 		window.clear();
 		frame++;
 		map.drawMap(window);
+
 
 		//czesc odpowiedzialna za czestotliwosc pojawiania sie przeciwnika, oraz pociskow
 		for (auto t : Towers)
@@ -61,10 +64,15 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed || (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)))
+			if (event.type == sf::Event::Closed)
 			{
 				window.close();
 			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+			{
+				menu.action(map);
+			}
+			//operacje zwiazane z myszka
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
 			{
 				sf::Vector2f mousePos = (sf::Vector2f)sf::Mouse::getPosition(window);

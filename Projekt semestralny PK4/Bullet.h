@@ -10,9 +10,10 @@ private:
 	sf::RectangleShape bullet;
 	sf::Vector2f speed;
 	sf::Texture bulletTexture;
+	sf::Texture bullet2Texture;
 	int damage;
 public:
-	Bullet(sf::Vector2f);
+	Bullet(sf::Vector2f,int);
 	~Bullet();
 	void setSpeed(float, float);
 	void setRotation(float);
