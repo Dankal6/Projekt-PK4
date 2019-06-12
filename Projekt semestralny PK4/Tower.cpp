@@ -85,24 +85,14 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 	{
 		bullet = std::make_shared<Bullet>(this->position, type);
 	}
-	bullet->setSpeed((enemy_pos.x - this->position.x) / 20 + enemy_speed.x, (enemy_pos.y - this->position.y) / 20 + enemy_speed.y);
-	double a = sqrt(pow(enemy_pos.x - this->position.x + enemy_speed.x, 2) + pow(enemy_pos.y - this->position.y, 2));
-	double b = sqrt(pow(enemy_pos.x - this->position.x + enemy_speed.x, 2));
-	double sin = b / a;
-	double rad = asin(sin);
-	double degrees = rad * (180.0 / 3.141592653589793238463);
-	//przeciwnik po lewej, wyzej
-	if ((enemy_pos.x - this->position.x) < 0 && (enemy_pos.y - this->position.y) < 0)
-		bullet->setRotation(360 - degrees);
-	//przeciwnik po prawej, wyzej
-	else if ((enemy_pos.y - this->position.y) < 0 && (enemy_pos.x - this->position.x) > 0)
-		bullet->setRotation(degrees);
-	//przeciwnik po lewej, nizej
-	else if ((enemy_pos.y - this->position.y) > 0 && (enemy_pos.x - this->position.x) < 0)
-		bullet->setRotation(180 + degrees);
-	//przeciwnik po prawej, nizej
-	else
-		bullet->setRotation(180 - degrees);
+	float x = 20;
+	sf::Vector2f aimDir = enemy_pos - this->position + x*enemy_speed;
+	float aimVectorMod = sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
+	sf::Vector2f aimDirNorm = aimDir / aimVectorMod;
+
+	bullet->setSpeed(6*aimDirNorm.x, 6*aimDirNorm.y);
+	float deg = atan2(aimDirNorm.y, aimDirNorm.x) * 180 / 3.14f;
+	bullet->setRotation(deg+90);
 	Bullets.push_back(bullet);
 }
 
