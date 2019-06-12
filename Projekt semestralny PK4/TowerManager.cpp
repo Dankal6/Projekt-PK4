@@ -26,19 +26,19 @@ TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Tower
 	buttonY.setTexture(&buttonYTexture);
 	buttonY.setOrigin(20 * scale, 20 * scale);
 
-	buttonArrow.setRadius(20 * scale);
-	buttonArrowTexture.loadFromFile("Textures/arrow.png");
+	buttonArrow.setSize(sf::Vector2f(40, 40));
+	buttonArrowTexture.loadFromFile("Textures/bow.png");
 	buttonArrowTexture.setSmooth(true);
 	buttonArrow.setTexture(&buttonArrowTexture);
 	buttonArrow.setOrigin(20 * scale, 20 * scale);
 
-	buttonFireball.setRadius(20 * scale);
+	buttonFireball.setSize(sf::Vector2f(40, 40));
 	buttonFireballTexture.loadFromFile("Textures/fireball.png");
 	buttonFireballTexture.setSmooth(true);
 	buttonFireball.setTexture(&buttonFireballTexture);
 	buttonFireball.setOrigin(20 * scale, 20 * scale);
 
-	ttf.loadFromFile("fonts/font.ttf");
+	ttf.loadFromFile("fonts/font.otf");
 	towerLevel.setFont(ttf);
 	towerLevel.setString("0");
 	towerLevel.setCharacterSize(100);
@@ -64,6 +64,7 @@ bool TowerManager::isPlaceClicked(sf::Vector2f mousePosition)
 				managedPlace = p;
 				buttonArrow.setPosition(p->returnPosition().x + (60 * scale), p->returnPosition().y - (40 * scale));
 				buttonFireball.setPosition(p->returnPosition().x - (60 * scale), p->returnPosition().y - (40 * scale));
+				return true;
 			}
 		}
 	}
@@ -73,11 +74,14 @@ bool TowerManager::isPlaceClicked(sf::Vector2f mousePosition)
 
 void TowerManager::isNewTowerClicked(sf::Vector2f mousePosition)
 {
+
 	if (buttonArrow.getGlobalBounds().contains(mousePosition))
 	{
 		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 1);
 		tower->setPlace(managedPlace);
 		Towers->push_back(tower);
+		buttonArrow.setPosition(-100, -100);
+		buttonFireball.setPosition(-100, -100);
 		managedPlace->setOccupied(true);
 		managedPlace = NULL;
 	}
@@ -86,9 +90,13 @@ void TowerManager::isNewTowerClicked(sf::Vector2f mousePosition)
 		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(),2);
 		tower->setPlace(managedPlace);
 		Towers->push_back(tower);
+		buttonArrow.setPosition(-100, -100);
+		buttonFireball.setPosition(-100, -100);
 		managedPlace->setOccupied(true);
 		managedPlace = NULL;
 	}
+
+
 }
 
 bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
@@ -131,6 +139,8 @@ void TowerManager::nothingClicked()
 		buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		towerLevel.setPosition(-100, -100);
+		buttonArrow.setPosition(-100, -100);
+		buttonFireball.setPosition(-100, -100);
 	}
 
 }

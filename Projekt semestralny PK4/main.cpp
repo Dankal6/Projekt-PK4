@@ -107,7 +107,7 @@ int main()
 				enemybase.setToSpawn(500);
 				//prowizoryczne poki co wyswietlanie Start
 				sf::Font ttf;
-				ttf.loadFromFile("fonts/font.ttf");
+				ttf.loadFromFile("fonts/font.otf");
 				std::string s("Start");
 				sf::Text txt(s, ttf);
 				txt.setCharacterSize(150);

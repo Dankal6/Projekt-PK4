@@ -35,7 +35,7 @@ void PlayerBase::check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *Enemies)
 void PlayerBase::gameOver(sf::RenderWindow* window)
 {
 	sf::Font ttf;
-	ttf.loadFromFile("fonts/font.ttf");
+	ttf.loadFromFile("fonts/font.otf");
 	std::string s("GAME OVER");
 	sf::Text txt(s, ttf);
 	txt.setCharacterSize(150 * scale);
@@ -53,7 +53,7 @@ void PlayerBase::drawBase(sf::RenderWindow* window)
 	}
 	//Wyswietlanie punktow gracza
 	sf::Font ttf;
-	ttf.loadFromFile("fonts/font.ttf");
+	ttf.loadFromFile("fonts/font.otf");
 	std::string s(std::to_string(returnPoints()));
 	sf::Text txt(s, ttf);
 	txt.setCharacterSize(150 * scale);

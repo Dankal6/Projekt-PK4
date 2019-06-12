@@ -18,9 +18,9 @@ class TowerManager
 	sf::Texture buttonUpgradeTexture;
 	sf::CircleShape buttonY;
 	sf::Texture buttonYTexture;
-	sf::CircleShape buttonArrow;
+	sf::RectangleShape buttonArrow;
 	sf::Texture buttonArrowTexture;
-	sf::CircleShape buttonFireball;
+	sf::RectangleShape buttonFireball;
 	sf::Texture buttonFireballTexture;
 
 	std::shared_ptr<Tower> managedTower;
