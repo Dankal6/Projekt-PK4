@@ -12,13 +12,25 @@ private:
 	int lifes;
 	std::vector<Enemy*> *Enemies;
 	int points = 0;
+	int cash = 0;
+	sf::RectangleShape playerInfo;
+	sf::Texture playerInfoTexture;
+	sf::Font ttf;
+	sf::Text _points;
+	sf::Text _cash;
+	sf::Text _lifes;
 public:
 	PlayerBase(sf::Vector2f);
 	~PlayerBase();
 	void check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *);
 	void gameOver(sf::RenderWindow*);
 	void drawBase(sf::RenderWindow*);
+
 	void addPoints(int);
 	int returnPoints();
+
+	void addCash(int);
+	int returnCash();
+	void spendCash(int);
 };
 

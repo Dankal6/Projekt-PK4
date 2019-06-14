@@ -9,6 +9,30 @@ PlayerBase::PlayerBase(sf::Vector2f pos)
 	base.setPosition(pos);
 	base.setOrigin(30 * scale, 30 * scale);
 	lifes = 1;
+
+	playerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
+	playerInfoTexture.loadFromFile("Textures/infoPlayer.png");
+	playerInfoTexture.setSmooth(true);
+	playerInfo.setTexture(&playerInfoTexture);
+	playerInfo.setPosition(1480*scale, 0);
+
+	ttf.loadFromFile("fonts/towerInfo.ttf");
+
+	_points.setFont(ttf);
+	_points.setCharacterSize(35 * scale);
+	_points.setFillColor(sf::Color::Black);
+	_points.setPosition(1510 * scale, 160 * scale);
+
+	_cash.setFont(ttf);
+	_cash.setCharacterSize(35 * scale);
+	_cash.setFillColor(sf::Color::Black);
+	_cash.setPosition(1510 * scale, 120 * scale);
+
+	_lifes.setFont(ttf);
+	_lifes.setCharacterSize(35 * scale);
+	_lifes.setFillColor(sf::Color::Black);
+	_lifes.setPosition(1510 * scale, 80 * scale);
+
 }
 
 
@@ -35,7 +59,7 @@ void PlayerBase::check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *Enemies)
 void PlayerBase::gameOver(sf::RenderWindow* window)
 {
 	sf::Font ttf;
-	ttf.loadFromFile("fonts/font.otf");
+	ttf.loadFromFile("fonts/towerInfo.ttf");
 	std::string s("GAME OVER");
 	sf::Text txt(s, ttf);
 	txt.setCharacterSize(150 * scale);
@@ -52,14 +76,18 @@ void PlayerBase::drawBase(sf::RenderWindow* window)
 		gameOver(window);
 	}
 	//Wyswietlanie punktow gracza
-	sf::Font ttf;
-	ttf.loadFromFile("fonts/font.otf");
-	std::string s(std::to_string(returnPoints()));
-	sf::Text txt(s, ttf);
-	txt.setCharacterSize(150 * scale);
-	txt.setFillColor(sf::Color(69, 120, 189));
-	txt.setPosition(1600*scale, 40 * scale);
-	window->draw(txt);
+
+	std::string slifes = "Lifes: " + std::to_string(this->lifes);
+	_lifes.setString(slifes);
+	std::string scash = "Cash: " + std::to_string(this->cash);
+	_cash.setString(scash);
+	std::string spoints = "Points: " + std::to_string(this->points);
+	_points.setString(spoints);
+
+	window->draw(playerInfo);
+	window->draw(_lifes);
+	window->draw(_points);
+	window->draw(_cash);
 }
 
 void PlayerBase::addPoints(int x)
@@ -70,4 +98,19 @@ void PlayerBase::addPoints(int x)
 int PlayerBase::returnPoints()
 {
 	return this->points;
+}
+
+void PlayerBase::addCash(int x)
+{
+	this->cash += x;
+}
+
+int PlayerBase::returnCash()
+{
+	return this->cash;
+}
+
+void PlayerBase::spendCash(int x)
+{
+	this->cash -= x;
 }

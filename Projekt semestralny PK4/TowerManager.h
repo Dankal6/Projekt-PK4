@@ -11,6 +11,8 @@ class TowerManager
 	sf::RenderWindow *window;
 	sf::Font ttf;
 	sf::Text towerLevel;
+	sf::Text towerDmg;
+	sf::Text towerRange;
 
 	sf::CircleShape buttonX;
 	sf::Texture buttonXTexture;
@@ -22,6 +24,9 @@ class TowerManager
 	sf::Texture buttonArrowTexture;
 	sf::RectangleShape buttonFireball;
 	sf::Texture buttonFireballTexture;
+
+	sf::RectangleShape towerInfo;
+	sf::Texture towerInfoTexture;
 
 	std::shared_ptr<Tower> managedTower;
 	std::shared_ptr<PlaceForTower> managedPlace;
@@ -36,6 +41,6 @@ public:
 	void drawMenu();
 	void sellTower(std::shared_ptr<Tower>);
 	void upgradeTower(std::shared_ptr<Tower>);
-	void showTowerLevel(std::shared_ptr<Tower>);
+	void showTowerInfo(std::shared_ptr<Tower>);
 };
 

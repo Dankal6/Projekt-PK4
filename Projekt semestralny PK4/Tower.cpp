@@ -99,12 +99,10 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 std::shared_ptr<Enemy> Tower::check_if_in_range(std::vector<std::shared_ptr<Enemy>> *Enemies)
 {
 	float d;
-
-
 	for (auto e : *Enemies)
 	{
 		sf::Vector2f enemy_pos = e->getPosition();
-		if (sqrt(pow(enemy_pos.x - this->position.x, 2) + pow(enemy_pos.y - this->position.y, 2)) < this->range_rad)
+		if (sqrt(pow(enemy_pos.x - this->position.x, 2) + pow(enemy_pos.y - this->position.y, 2)) < this->range.getRadius())
 			return e;
 	}
 	return NULL;
@@ -139,7 +137,10 @@ std::shared_ptr<PlaceForTower> Tower::getPlace()
 
 void Tower::incrementFrame()
 {
-	this->frame++;
+	if (type == 2)
+		this->frame++;
+	else if (type == 1)
+		this->frame += 2;
 }
 
 int Tower::returnFrames()
@@ -180,6 +181,23 @@ int Tower::returnLevel()
 void Tower::setLevel(int x)
 {
 	upgradeLevel = x;
+}
+
+int Tower::returnRange()
+{
+	return this->range.getRadius();
+}
+
+void Tower::setRange(int x)
+{
+	this->range.setRadius(range.getRadius() + x);
+	this->range.setOrigin(range.getRadius(), range.getRadius());
+	this->range.setPosition(this->position);
+}
+
+int Tower::returnType()
+{
+	return this->type;
 }
 
 std::vector<std::shared_ptr<Bullet>> *Tower::returnBullets()

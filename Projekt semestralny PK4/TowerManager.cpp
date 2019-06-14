@@ -26,25 +26,40 @@ TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Tower
 	buttonY.setTexture(&buttonYTexture);
 	buttonY.setOrigin(20 * scale, 20 * scale);
 
-	buttonArrow.setSize(sf::Vector2f(40, 40));
+	buttonArrow.setSize(sf::Vector2f(40 * scale, 40 * scale));
 	buttonArrowTexture.loadFromFile("Textures/bow.png");
 	buttonArrowTexture.setSmooth(true);
 	buttonArrow.setTexture(&buttonArrowTexture);
 	buttonArrow.setOrigin(20 * scale, 20 * scale);
 
-	buttonFireball.setSize(sf::Vector2f(40, 40));
+	buttonFireball.setSize(sf::Vector2f(40 * scale, 40 * scale));
 	buttonFireballTexture.loadFromFile("Textures/fireball.png");
 	buttonFireballTexture.setSmooth(true);
 	buttonFireball.setTexture(&buttonFireballTexture);
 	buttonFireball.setOrigin(20 * scale, 20 * scale);
 
-	ttf.loadFromFile("fonts/font.otf");
+	towerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
+	towerInfoTexture.loadFromFile("Textures/infoTower.png");
+	towerInfoTexture.setSmooth(true);
+	towerInfo.setTexture(&towerInfoTexture);
+	towerInfo.setPosition(-500, 0);
+
+	ttf.loadFromFile("fonts/towerInfo.ttf");
 	towerLevel.setFont(ttf);
-	towerLevel.setString("0");
-	towerLevel.setCharacterSize(100);
-	towerLevel.setOrigin(25, 25);
+	towerDmg.setFont(ttf);
+	towerRange.setFont(ttf);
+	towerLevel.setCharacterSize(35 * scale);
+	towerDmg.setCharacterSize(35 * scale);
+	towerRange.setCharacterSize(35 * scale);
+	towerLevel.setOrigin(25 * scale, 25 * scale);
+	towerDmg.setOrigin(25 * scale, 25 * scale);
+	towerRange.setOrigin(25 * scale, 25 * scale);
 	towerLevel.setFillColor(sf::Color::Black);
-	towerLevel.setPosition(-100,-100);
+	towerDmg.setFillColor(sf::Color::Black);
+	towerRange.setFillColor(sf::Color::Black);
+	towerLevel.setPosition(-100, -100);
+	towerDmg.setPosition(-100, -100);
+	towerRange.setPosition(-100, -100);
 
 }
 
@@ -87,7 +102,7 @@ void TowerManager::isNewTowerClicked(sf::Vector2f mousePosition)
 	}
 	if (buttonFireball.getGlobalBounds().contains(mousePosition))
 	{
-		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(),2);
+		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 2);
 		tower->setPlace(managedPlace);
 		Towers->push_back(tower);
 		buttonArrow.setPosition(-100, -100);
@@ -121,10 +136,11 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 		{
 			//t->returnTower()->setFillColor(sf::Color::Red);
 			managedTower = t;
-			t->drawRange(true);
-			showTowerLevel(managedTower);	//t to samo
-			buttonX.setPosition(t->returnPosition().x + (60 * scale), t->returnPosition().y - (40*scale));
+			managedTower->drawRange(true);
+			buttonX.setPosition(t->returnPosition().x + (60 * scale), t->returnPosition().y - (40 * scale));
 			buttonUpgrade.setPosition(t->returnPosition().x - (60 * scale), t->returnPosition().y - (40 * scale));
+			showTowerInfo(managedTower);	//t to samo
+			towerInfo.setPosition(0, 720 * scale);
 			return true;
 		}
 	}
@@ -139,8 +155,11 @@ void TowerManager::nothingClicked()
 		buttonX.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		buttonUpgrade.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 		towerLevel.setPosition(-100, -100);
+		towerDmg.setPosition(-100, -100);
+		towerRange.setPosition(-100, -100);
 		buttonArrow.setPosition(-100, -100);
 		buttonFireball.setPosition(-100, -100);
+		towerInfo.setPosition(-1000, -1000);
 	}
 
 }
@@ -151,9 +170,12 @@ void TowerManager::drawMenu()
 	window->draw(buttonX);
 	window->draw(buttonUpgrade);
 	window->draw(buttonY);
-	window->draw(towerLevel);
 	window->draw(buttonArrow);
 	window->draw(buttonFireball);
+	window->draw(towerInfo);
+	window->draw(towerLevel);
+	window->draw(towerDmg);
+	window->draw(towerRange);
 }
 
 void TowerManager::sellTower(std::shared_ptr<Tower> toSell)
@@ -176,13 +198,29 @@ void TowerManager::sellTower(std::shared_ptr<Tower> toSell)
 
 void TowerManager::upgradeTower(std::shared_ptr<Tower> tower)
 {
-	tower->setDamage(tower->returnDamage() + 5);
-	tower->setLevel(tower->returnLevel()+1);
+	if (tower->returnType() == 1)
+	{
+		tower->setDamage(tower->returnDamage() + 5);
+		tower->setLevel(tower->returnLevel() + 1);
+		tower->setRange(20);
+	}
+	else if (tower->returnType() == 2)
+	{
+		tower->setDamage(tower->returnDamage() + 10);
+		tower->setLevel(tower->returnLevel() + 1);
+		tower->setRange(10);
+	}
 }
 
-void TowerManager::showTowerLevel(std::shared_ptr<Tower> managedTower)
+void TowerManager::showTowerInfo(std::shared_ptr<Tower> managedTower)
 {
-	std::string s = std::to_string(managedTower->returnLevel());
-	towerLevel.setString(s);
-	towerLevel.setPosition(managedTower->returnPosition().x, managedTower->returnPosition().y + (20 * scale));
+	std::string towerLvl = "Tower level: " + std::to_string(managedTower->returnLevel());
+	towerLevel.setString(towerLvl);
+	towerLevel.setPosition(60 * scale, 820 * scale);
+	std::string towerDamage = "Damage: " + std::to_string(managedTower->returnDamage());
+	towerDmg.setString(towerDamage);
+	towerDmg.setPosition(60 * scale, 860 * scale);
+	std::string towerRan = "Range: " + std::to_string(managedTower->returnRange());
+	towerRange.setString(towerRan);
+	towerRange.setPosition(60 * scale, 900 * scale);
 }

@@ -1,15 +1,8 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "Enemy.h"
 #include "Bullet.h"
-#include <math.h>
 #include "Scale.h"
 #include "PlaceForTower.h"
-#include <cmath>
-
-#include <memory>
-
-#include <iostream>
 
 class Enemy;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
 
@@ -49,6 +42,11 @@ public:
 	void setDamage(int);
 	int returnLevel();
 	void setLevel(int);
+	int returnRange();
+	void setRange(int);
+
+	int returnType();
+
 
 	std::vector<std::shared_ptr<Bullet>> *returnBullets();
 	void bullets_out_of_range();

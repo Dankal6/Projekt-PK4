@@ -1,8 +1,6 @@
 #pragma once
-#include <SFML/Graphics.hpp>
 #include "Tower.h"
 #include "PlayerBase.h"
-#include <iostream>
 #include "Animation.h"
 #include "Scale.h"
 
