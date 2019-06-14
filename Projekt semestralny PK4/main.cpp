@@ -40,10 +40,10 @@ int main()
 	}
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
 	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
-	TowerManager towermanager(&map, &Towers,&window);
+	TowerManager towermanager(&map, &Towers,&window,&playerbase);
 	Menu menu(&window);
 
-	menu.action(map);
+	menu.action(map, playerbase, Towers, Enemies);
 
 	while (window.isOpen())
 	{
@@ -70,7 +70,7 @@ int main()
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				menu.action(map);
+				menu.action(map,playerbase, Towers, Enemies);
 			}
 			//operacje zwiazane z myszka
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)

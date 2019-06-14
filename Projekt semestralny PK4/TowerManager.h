@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Tower.h"
 #include "PlaceForTower.h"
+#include "PlayerBase.h"
 
 class TowerManager
 {
@@ -13,6 +14,7 @@ class TowerManager
 	sf::Text towerLevel;
 	sf::Text towerDmg;
 	sf::Text towerRange;
+	PlayerBase *player;
 
 	sf::CircleShape buttonX;
 	sf::Texture buttonXTexture;
@@ -31,7 +33,7 @@ class TowerManager
 	std::shared_ptr<Tower> managedTower;
 	std::shared_ptr<PlaceForTower> managedPlace;
 public:
-	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*,sf::RenderWindow*);
+	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*,sf::RenderWindow*,PlayerBase*);
 	~TowerManager();
 
 	bool isPlaceClicked(sf::Vector2f);

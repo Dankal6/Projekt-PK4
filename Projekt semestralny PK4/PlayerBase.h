@@ -28,9 +28,13 @@ public:
 
 	void addPoints(int);
 	int returnPoints();
+	void setPoints(int);
 
 	void addCash(int);
 	int returnCash();
+	void setCash(int);
 	void spendCash(int);
+
+	void setLifes(int);
 };
 

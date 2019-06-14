@@ -8,7 +8,7 @@ PlayerBase::PlayerBase(sf::Vector2f pos)
 	base.setFillColor(sf::Color::Blue);
 	base.setPosition(pos);
 	base.setOrigin(30 * scale, 30 * scale);
-	lifes = 1;
+	lifes = 20;
 
 	playerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
 	playerInfoTexture.loadFromFile("Textures/infoPlayer.png");
@@ -33,6 +33,8 @@ PlayerBase::PlayerBase(sf::Vector2f pos)
 	_lifes.setFillColor(sf::Color::Black);
 	_lifes.setPosition(1510 * scale, 80 * scale);
 
+	this->cash = 50;
+
 }
 
 
@@ -50,6 +52,7 @@ void PlayerBase::check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *Enemies)
 		{
 			lifes--;
 			Enemies->erase(Enemies->begin() + i);
+			return;
 		}
 		i++;
 	}
@@ -95,6 +98,11 @@ void PlayerBase::addPoints(int x)
 	points += x;
 }
 
+void PlayerBase::setPoints(int x)
+{
+	points = x;
+}
+
 int PlayerBase::returnPoints()
 {
 	return this->points;
@@ -103,6 +111,16 @@ int PlayerBase::returnPoints()
 void PlayerBase::addCash(int x)
 {
 	this->cash += x;
+}
+
+void PlayerBase::setLifes(int x)
+{
+	this->lifes = x;
+}
+
+void PlayerBase::setCash(int x)
+{
+	this->cash = x;
 }
 
 int PlayerBase::returnCash()

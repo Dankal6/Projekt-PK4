@@ -2,11 +2,12 @@
 
 
 
-TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Towers, sf::RenderWindow *_window)
+TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Towers, sf::RenderWindow *_window, PlayerBase *_player)
 {
 	placesForTowers = map->returnPlaces();
 	Towers = _Towers;
 	window = _window;
+	player = _player;
 
 	buttonX.setRadius(20 * scale);
 	buttonXTexture.loadFromFile("Textures/X.png");
@@ -92,23 +93,31 @@ void TowerManager::isNewTowerClicked(sf::Vector2f mousePosition)
 
 	if (buttonArrow.getGlobalBounds().contains(mousePosition))
 	{
-		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 1);
-		tower->setPlace(managedPlace);
-		Towers->push_back(tower);
-		buttonArrow.setPosition(-100, -100);
-		buttonFireball.setPosition(-100, -100);
-		managedPlace->setOccupied(true);
-		managedPlace = NULL;
+		if (player->returnCash() >= 25)
+		{
+			std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 1);
+			tower->setPlace(managedPlace);
+			Towers->push_back(tower);
+			buttonArrow.setPosition(-100, -100);
+			buttonFireball.setPosition(-100, -100);
+			managedPlace->setOccupied(true);
+			managedPlace = NULL;
+			player->spendCash(25);
+		}
 	}
 	if (buttonFireball.getGlobalBounds().contains(mousePosition))
 	{
-		std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 2);
-		tower->setPlace(managedPlace);
-		Towers->push_back(tower);
-		buttonArrow.setPosition(-100, -100);
-		buttonFireball.setPosition(-100, -100);
-		managedPlace->setOccupied(true);
-		managedPlace = NULL;
+		if (player->returnCash() >= 40)
+		{
+			std::shared_ptr<Tower> tower = std::make_shared<Tower>(window, managedPlace->returnSquare().getPosition(), 2);
+			tower->setPlace(managedPlace);
+			Towers->push_back(tower);
+			buttonArrow.setPosition(-100, -100);
+			buttonFireball.setPosition(-100, -100);
+			managedPlace->setOccupied(true);
+			managedPlace = NULL;
+			player->spendCash(40);
+		}
 	}
 
 
@@ -119,10 +128,28 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 	if (buttonX.getGlobalBounds().contains(mousePosition))
 	{
 		sellTower(managedTower);
+		if (managedTower->returnType() == 1)
+		{
+			player->addCash(12);
+		}
+		else
+		{
+			player->addCash(20);
+		}
 	}
 	if (buttonY.getGlobalBounds().contains(mousePosition))
 	{
-		upgradeTower(managedTower);
+
+		if (managedTower->returnType() == 1 && player->returnCash()>=12)
+		{
+			player->spendCash(12);
+			upgradeTower(managedTower);
+		}
+		else if(managedTower->returnType() == 2 && player->returnCash() >= 20)
+		{
+			player->spendCash(20);
+			upgradeTower(managedTower);
+		}
 		buttonY.setPosition(-100, -100);	//aby przycisk zniknal, wyrzucam go tymczasowo poza ekran
 	}
 	else if (buttonUpgrade.getGlobalBounds().contains(mousePosition))

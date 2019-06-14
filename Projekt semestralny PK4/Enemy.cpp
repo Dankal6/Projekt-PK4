@@ -156,6 +156,7 @@ bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_
 				Enemies->erase(Enemies->begin() + i);
 				std::cout << "Padl przeciwnik: " << i << ", pozostalo przeciwnikow: " << Enemies->size() << std::endl;
 				player->addPoints(1);
+				player->addCash(1);
 				return true;
 			}
 			return false;
