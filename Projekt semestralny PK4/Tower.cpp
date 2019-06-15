@@ -76,6 +76,7 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
 	sf::Vector2f enemy_speed = to_shoot->returnSpeed();
+
 	std::shared_ptr<Bullet> bullet;
 	if (this->type == 1)
 	{
@@ -85,14 +86,15 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 	{
 		bullet = std::make_shared<Bullet>(this->position, type);
 	}
-	float x = 20;
-	sf::Vector2f aimDir = enemy_pos - this->position + x*enemy_speed;
-	float aimVectorMod = sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
-	sf::Vector2f aimDirNorm = aimDir / aimVectorMod;
-
-	bullet->setSpeed(6*aimDirNorm.x, 6*aimDirNorm.y);
+	sf::Vector2f aimDirNorm;
+	std::thread the_thread(&Tower::calcaimDirNorm,this, enemy_pos, enemy_speed, this->position, std::ref(aimDirNorm));
+	//std::thread the_thread(&Tower::calc, this,  2, 4);
+	the_thread.join();
 	float deg = atan2(aimDirNorm.y, aimDirNorm.x) * 180 / 3.14f;
-	bullet->setRotation(deg+90);
+
+	bullet->setSpeed(6 * aimDirNorm.x, 6 * aimDirNorm.y);
+
+	bullet->setRotation(deg + 90);
 	Bullets.push_back(bullet);
 }
 
@@ -161,6 +163,20 @@ sf::RectangleShape * Tower::returnTower()
 void Tower::actionWithTower()
 {
 	this->tower.setFillColor(sf::Color::Red);
+}
+
+void Tower::calcaimDirNorm(sf::Vector2f enemy_pos, sf::Vector2f enemy_speed, sf::Vector2f position, sf::Vector2f &aimDirNorm)
+{
+	float x = 20;
+	sf::Vector2f aimDir = enemy_pos - position + x * enemy_speed;
+	float aimVectorMod = sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
+	aimDirNorm = aimDir / aimVectorMod;
+
+}
+
+void Tower::calc(int x, int y)
+{
+	int a = x + y;
 }
 
 int Tower::returnDamage()

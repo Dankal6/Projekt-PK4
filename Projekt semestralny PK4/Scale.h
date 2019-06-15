@@ -5,5 +5,6 @@
 #include <cmath>
 #include <math.h>
 #include <memory>
+#include <thread>
 
 extern double scale;

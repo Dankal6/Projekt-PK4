@@ -14,6 +14,7 @@ private:
 	sf::Vector2f position;
 	sf::RenderWindow *window;
 	std::vector<std::shared_ptr<Bullet>> Bullets;
+	std::thread the_thread;
 	sf::Texture towerTexture;
 	sf::Texture tower2Texture;
 	std::shared_ptr<PlaceForTower> place;
@@ -56,6 +57,8 @@ public:
 	sf::RectangleShape* returnTower();
 
 	void actionWithTower();
+	void calcaimDirNorm(sf::Vector2f, sf::Vector2f, sf::Vector2f, sf::Vector2f&);
+	void calc(int, int);
 };
 
 

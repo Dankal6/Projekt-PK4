@@ -1,2 +1,2 @@
 #include "Scale.h"
-double scale = 0.9;
+double scale = 0.7;

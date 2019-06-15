@@ -76,10 +76,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Danielowy Eltech\Desktop\Studia\SFML-2.5.1-windows-vc15-32-bit\SFML-2.5.1\include;C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Danielowy Eltech\source\repos\Dankal6\Projekt-PK4\Projekt semestralny PK4\SFML\lib;C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -89,10 +89,10 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Danielowy Eltech\Desktop\Studia\SFML-2.5.1-windows-vc15-32-bit\SFML-2.5.1\include;C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Danielowy Eltech\source\repos\Dankal6\Projekt-PK4\Projekt semestralny PK4\SFML\lib;C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -104,12 +104,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Danielowy Eltech\Desktop\Studia\SFML-2.5.1-windows-vc15-32-bit\SFML-2.5.1\include;C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Danielowy Eltech\source\repos\Dankal6\Projekt-PK4\Projekt semestralny PK4\SFML\lib;C:\Users\Daniel\source\repos\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-window-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -121,12 +121,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\Danielowy Eltech\Desktop\Studia\SFML-2.5.1-windows-vc15-32-bit\SFML-2.5.1\include;C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\Danielowy Eltech\source\repos\Dankal6\Projekt-PK4\Projekt semestralny PK4\SFML\lib;C:\Users\Daniel\source\repos\Projekt-PK4\Projekt semestralny PK4\SFML\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
