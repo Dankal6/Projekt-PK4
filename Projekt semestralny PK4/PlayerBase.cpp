@@ -2,13 +2,14 @@
 
 
 
-PlayerBase::PlayerBase(sf::Vector2f pos)
+PlayerBase::PlayerBase(sf::Vector2f pos, EnemyBase *_enemybase)
 {
 	base.setSize(sf::Vector2f(60.0f*scale, 60.0f*scale));
 	base.setFillColor(sf::Color::Blue);
 	base.setPosition(pos);
 	base.setOrigin(30 * scale, 30 * scale);
 	lifes = 20;
+	enemybase = _enemybase;
 
 	playerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
 	playerInfoTexture.loadFromFile("Textures/infoPlayer.png");
@@ -32,6 +33,18 @@ PlayerBase::PlayerBase(sf::Vector2f pos)
 	_lifes.setCharacterSize(35 * scale);
 	_lifes.setFillColor(sf::Color::Black);
 	_lifes.setPosition(1510 * scale, 80 * scale);
+
+	_speed.setFont(ttf);
+	_speed.setCharacterSize(35 * scale);
+	_speed.setFillColor(sf::Color::Black);
+	_speed.setPosition(1510 * scale, 200 * scale);
+	_speed.setString("Speed: 1");
+
+	_wave.setFont(ttf);
+	_wave.setCharacterSize(35 * scale);
+	_wave.setFillColor(sf::Color::Black);
+	_wave.setPosition(1510 * scale, 240 * scale);
+	_wave.setString("Wave: 0");
 
 	this->cash = 50;
 
@@ -87,10 +100,20 @@ void PlayerBase::drawBase(sf::RenderWindow* window)
 	std::string spoints = "Points: " + std::to_string(this->points);
 	_points.setString(spoints);
 
+	setWave();
+
 	window->draw(playerInfo);
 	window->draw(_lifes);
 	window->draw(_points);
 	window->draw(_cash);
+	window->draw(_speed);
+	window->draw(_wave);
+}
+
+void PlayerBase::setSpeed(int x)
+{
+	this->speed = x;
+	_speed.setString("Speed: " + std::to_string(x));
 }
 
 void PlayerBase::addPoints(int x)
@@ -116,6 +139,11 @@ void PlayerBase::addCash(int x)
 void PlayerBase::setLifes(int x)
 {
 	this->lifes = x;
+}
+
+void PlayerBase::setWave()
+{
+	_wave.setString("Wave: " + std::to_string(enemybase->returnWave()));
 }
 
 void PlayerBase::setCash(int x)

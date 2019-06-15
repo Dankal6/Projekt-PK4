@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Enemy.h"
+#include "EnemyBase.h"
 
 class Enemy;	//potrzebny aby  nie bylo bledu wzajemnego include, do poprawy
+class EnemyBase;
 
 class PlayerBase
 {
@@ -10,7 +11,10 @@ private:
 	sf::Vector2f position;
 	sf::RectangleShape base;
 	int lifes;
+	int speed;
+	int wave;
 	std::vector<Enemy*> *Enemies;
+	EnemyBase *enemybase;
 	int points = 0;
 	int cash = 0;
 	sf::RectangleShape playerInfo;
@@ -19,12 +23,16 @@ private:
 	sf::Text _points;
 	sf::Text _cash;
 	sf::Text _lifes;
+	sf::Text _speed;
+	sf::Text _wave;
 public:
-	PlayerBase(sf::Vector2f);
+	PlayerBase(sf::Vector2f,EnemyBase*);
 	~PlayerBase();
 	void check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *);
 	void gameOver(sf::RenderWindow*);
 	void drawBase(sf::RenderWindow*);
+
+	void setSpeed(int);
 
 	void addPoints(int);
 	int returnPoints();
@@ -36,5 +44,6 @@ public:
 	void spendCash(int);
 
 	void setLifes(int);
+	void setWave();
 };
 

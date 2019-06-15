@@ -16,10 +16,11 @@ private:
 	sf::RectangleShape healthBar;
 	double healthPoint;
 	double healthPointLeft;
+	int type;
 	sf::Texture enemyTexture;
 	Animation *animation;
 public:
-	Enemy(sf::Vector2f);
+	Enemy(sf::Vector2f,int,int);
 	~Enemy();
 	void drawEnemy(sf::RenderWindow&);
 	void move(float);
@@ -29,5 +30,6 @@ public:
 	sf::Vector2f getPosition();
 	bool gotHitted(std::vector<std::shared_ptr<Enemy>> *, std::shared_ptr<Tower>,PlayerBase*);
 	double returnHealthAsPercent();
+	int returnType();
 };
 

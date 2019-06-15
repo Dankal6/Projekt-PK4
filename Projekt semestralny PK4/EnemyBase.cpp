@@ -20,13 +20,32 @@ EnemyBase::~EnemyBase()
 
 void EnemyBase::spawnEnemy(std::vector<std::shared_ptr<Enemy>> *Enemies)
 {
-	if(this->toSpawn>0)
+
+
+	if (this->which_type == 3 || this->which_type == 4 || this->which_type == 6)
 	{
-		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position);
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position, 3, this->wave);
 		Enemies->push_back(enemy);
-		this->toSpawn--;
 	}
-	
+	else if (this->which_type == 5)
+	{
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position, 2, this->wave);
+		Enemies->push_back(enemy);
+	}
+	else if (this->which_type == 7)
+	{
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position, 4, this->wave);
+		Enemies->push_back(enemy);
+		this->which_type=0;
+		this->wave++;
+		return;
+	}
+	else
+	{
+		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position, 1, this->wave);
+		Enemies->push_back(enemy);
+	}
+	this->which_type++;
 }
 
 void EnemyBase::setToSpawn(int x)
@@ -52,4 +71,9 @@ int EnemyBase::returnFrames()
 void EnemyBase::resetFrames()
 {
 	this->frame = 0;
+}
+
+int EnemyBase::returnWave()
+{
+	return this->wave;
 }

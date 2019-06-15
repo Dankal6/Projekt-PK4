@@ -39,7 +39,7 @@ int main()
 		return 0;
 	}
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
-	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale));
+	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale),&enemybase);
 	TowerManager towermanager(&map, &Towers,&window,&playerbase);
 	Menu menu(&window);
 
@@ -85,20 +85,24 @@ int main()
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
 			{
 				game_paused = false;
+				playerbase.setSpeed(1);
 				window.setFramerateLimit(60);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad2))
 			{
 				game_paused = false;
+				playerbase.setSpeed(2);
 				window.setFramerateLimit(120);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad3))
 			{
 				game_paused = false;
+				playerbase.setSpeed(3);
 				window.setFramerateLimit(240);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))
 			{
+				playerbase.setSpeed(0);
 				game_paused = true;
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
@@ -125,8 +129,7 @@ int main()
 			{
 				t->shoot();
 				//sprawdzanie, czy jakis przecinik jest w zasiegu
-				shared_ptr<Enemy> enemy_to_shoot = make_shared<Enemy>(t->returnPosition());
-				enemy_to_shoot = t->check_if_in_range(&Enemies);
+				shared_ptr<Enemy> enemy_to_shoot = t->check_if_in_range(&Enemies);
 				if (enemy_to_shoot != NULL)
 				{
 					if (t->returnFrames() >= 20)

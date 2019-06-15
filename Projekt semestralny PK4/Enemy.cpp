@@ -2,14 +2,14 @@
 
 int how_many_enemies = 0;
 
-Enemy::Enemy(sf::Vector2f pos)
+Enemy::Enemy(sf::Vector2f pos, int _type, int wave)
 {
 	enemy.setSize(sf::Vector2f(25.0f*scale, 50.0f*scale));
 	//enemy.setFillColor(sf::Color::Red);
 	enemy.setPosition(pos);
 	enemy.setOrigin(10 * scale, 20 * scale);
-	this->healthPoint = 60;
-	this->healthPointLeft = 60;
+	type = _type;
+
 	healthBar.setSize(sf::Vector2f(26.0f*scale, 2.0f*scale));
 	healthBar.setFillColor(sf::Color::Green);
 	healthBar.setOrigin(13 * scale, 25 * scale);
@@ -17,8 +17,31 @@ Enemy::Enemy(sf::Vector2f pos)
 
 	//inicjacja ruchu
 	this->setSpeed(2, 0);
+	if (type == 1)
+	{
+		enemyTexture.loadFromFile("Textures/orc_warrior-green-SWEN.png");
+		this->healthPoint = 30 + ((type*10*wave)/2);
+		this->healthPointLeft = this->healthPoint;
+	}
+	else if (type == 2)
+	{
+		enemyTexture.loadFromFile("Textures/orc_chief-brown-SWEN.png");
+		this->healthPoint = 60 + ((type * 10 * wave) / 2);
+		this->healthPointLeft = this->healthPoint;
+	}
+	else if (type == 3)
+	{
+		enemyTexture.loadFromFile("Textures/orc_spearman-green-SWEN.png");
+		this->healthPoint = 40 + ((type * 10 * wave) / 2);
+		this->healthPointLeft = this->healthPoint;
+	}
+	else if (type == 4)
+	{
+		enemyTexture.loadFromFile("Textures/orc_shaman-brown-SWEN.png");
+		this->healthPoint = 80 + ((type * 10 * wave) / 2);
+		this->healthPointLeft = this->healthPoint;
+	}
 
-	enemyTexture.loadFromFile("Textures/orc-green-SWEN.png");
 	enemyTexture.setSmooth(true);
 	enemy.setTexture(&enemyTexture);
 	animation = new Animation(&enemyTexture, sf::Vector2u(3, 4), 0.3);
@@ -168,4 +191,9 @@ bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_
 double Enemy::returnHealthAsPercent()
 {
 	return (this->healthPointLeft / this->healthPoint);
+}
+
+int Enemy::returnType()
+{
+	return this->type;
 }

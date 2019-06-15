@@ -14,6 +14,12 @@ class TowerManager
 	sf::Text towerLevel;
 	sf::Text towerDmg;
 	sf::Text towerRange;
+	sf::Text arrowCost;
+	sf::Text fireballCost;
+	sf::Text arrowUpgradeCost;
+	sf::Text fireballUpgradeCost;
+	sf::Text arrowSell;
+	sf::Text fireballSell;
 	PlayerBase *player;
 
 	sf::CircleShape buttonX;

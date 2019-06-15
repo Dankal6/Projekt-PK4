@@ -17,14 +17,14 @@ Tower::Tower(sf::RenderWindow *main_window, sf::Vector2f pos, int _type)
 		range.setRadius(range_rad);
 		range.setOrigin(range_rad, range_rad);
 		towerTexture.loadFromFile("Textures/tower1.png");
-		damage = 5;
+		damage = 10;
 	}
 	else if (type == 2)
 	{
 		range.setRadius(range_rad - (50 * scale));
 		range.setOrigin(range_rad - (50 * scale), range_rad - (50 * scale));
 		towerTexture.loadFromFile("Textures/tower2.png");
-		damage = 10;
+		damage = 20;
 	}
 
 	range.setPosition(position);
