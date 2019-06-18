@@ -10,16 +10,42 @@ Bullet::Bullet(sf::Vector2f pos,int type)
 
 	if (type == 1)
 	{
-		bulletTexture.loadFromFile("Textures/arrow.png");
-		bullet.setSize(sf::Vector2f(10.0f*scale, 35.0f*scale));
+		try
+		{
+			bool a = bulletTexture.loadFromFile("Textures/arrow.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			bullet.setSize(sf::Vector2f(10.0f*scale, 35.0f*scale));
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
 	}
 	else if (type == 2)
-
 	{
-		bulletTexture.loadFromFile("Textures/fireball.png");
-		bullet.setSize(sf::Vector2f(20.0f*scale, 20.0f*scale));
+		try
+		{
+			bool a = bulletTexture.loadFromFile("Textures/fireball.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			bullet.setSize(sf::Vector2f(20.0f*scale, 20.0f*scale));
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
 	}
-
 	bulletTexture.setSmooth(true);
 	bullet.setTexture(&bulletTexture);
 	how_many_bullets++;

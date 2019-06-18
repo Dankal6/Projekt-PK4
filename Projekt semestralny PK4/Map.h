@@ -9,7 +9,6 @@ private:
 	sf::RectangleShape map;
 	std::vector<std::shared_ptr<PlaceForTower>> placesForTowers;
 	sf::Texture mapTexture;
-	//kwadrat ma miec wymiary 40x40, co daje nam tablice kwadratow przy fullhd 48x27
 	std::vector<sf::RectangleShape> squares;
 
 public:
@@ -17,10 +16,7 @@ public:
 	~Map();
 	void drawMap(sf::RenderWindow&);
 	void generatePlaces();
-	bool setMapTexture();
+	void setMapTexture();
 	std::vector<std::shared_ptr<PlaceForTower>> *returnPlaces();
-	//do wykorzystania przy algorytmie wyszukiwania drogi
-	//void initMapAsSquares();
-	//void drawMapAsSquares(sf::RenderWindow&);
 };
 

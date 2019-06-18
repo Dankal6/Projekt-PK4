@@ -50,11 +50,6 @@ void EnemyBase::spawnEnemy()
 	this->which_type++;
 }
 
-void EnemyBase::setToSpawn(int x)
-{
-	this->toSpawn = x;
-}
-
 void EnemyBase::drawBase()
 {
 	window->draw(base);
@@ -73,6 +68,11 @@ int EnemyBase::returnFrames()
 void EnemyBase::resetFrames()
 {
 	this->frame = 0;
+}
+
+void EnemyBase::resetWaves()
+{
+	wave = 0;
 }
 
 int EnemyBase::returnWave()
@@ -95,4 +95,9 @@ void EnemyBase::drawEnemies()
 	{
 		e->drawEnemy(*window);
 	}
+}
+
+std::vector<std::shared_ptr<Enemy>>* EnemyBase::getEnemies()
+{
+	return Enemies;
 }

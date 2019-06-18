@@ -65,25 +65,25 @@ void Map::generatePlaces()
 	placesForTowers.push_back(p18);
 }
 
-bool Map::setMapTexture()
+void Map::setMapTexture()
 {
 	try
 	{
 		bool a = mapTexture.loadFromFile("Textures/Grass1.png");
 		if (a == false)
 		{
-			std::string wyjatek = "Did not found map texture!";
+			std::string wyjatek = "Please check for that texture!";
 			throw wyjatek;
 		}
 		mapTexture.setSmooth(true);
 		map.setTexture(&mapTexture);
 		generatePlaces();
-		return true;
 	}
 	catch (std::string wyjatek)
 	{
 		std::cout << wyjatek << std::endl;
-		return false;
+		system("pause");
+		exit(0);
 	}
 }
 

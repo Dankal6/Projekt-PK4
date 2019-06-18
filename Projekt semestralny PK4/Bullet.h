@@ -18,6 +18,5 @@ public:
 	void move();
 	void drawBullet(sf::RenderWindow*);
 	sf::Vector2f returnPosition();
-
 };
 

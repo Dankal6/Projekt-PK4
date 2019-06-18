@@ -55,5 +55,11 @@ public:
 	void shooting();
 	void drawTowers();
 	void incrementFrames();
+	void loadXTexture();
+	void loadUpgradeTexture();
+	void loadYTexture();
+	void loadBowTexture();
+	void loadFireballTexture();
+	void loadInfoTowerTexture();
 };
 

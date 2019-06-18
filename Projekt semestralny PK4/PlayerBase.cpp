@@ -47,7 +47,7 @@ PlayerBase::PlayerBase(EnemyBase *_enemybase)
 	_wave.setString("Wave: 0");
 
 	this->cash = 50;
-
+	Enemies = enemybase->getEnemies();
 }
 
 
@@ -55,7 +55,7 @@ PlayerBase::~PlayerBase()
 {
 }
 
-void PlayerBase::check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *Enemies)
+void PlayerBase::check_if_enemy_in()
 {
 	int i = 0;
 	for (auto e : *Enemies)
@@ -144,6 +144,11 @@ void PlayerBase::setLifes(int x)
 void PlayerBase::setWave()
 {
 	_wave.setString("Wave: " + std::to_string(enemybase->returnWave()));
+}
+
+void PlayerBase::resetWaves()
+{
+	enemybase->resetWaves();
 }
 
 void PlayerBase::setStart(bool _start)

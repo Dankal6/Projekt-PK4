@@ -8,11 +8,9 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
 	this->switchTime = switchTime;
 	totalTime = 0;
 	currentImage.x = 0;
-
 	uvRect.width = texture->getSize().x / float(imageCount.x);
 	uvRect.height = texture->getSize().y / float(imageCount.y);
 }
-
 
 Animation::~Animation()
 {
@@ -33,7 +31,6 @@ void Animation::Update(int row, float deltaTime)
 			currentImage.x = 0;
 		}
 	}
-
 	uvRect.left = currentImage.x * uvRect.width;
 	uvRect.top = currentImage.y * uvRect.height;
 }

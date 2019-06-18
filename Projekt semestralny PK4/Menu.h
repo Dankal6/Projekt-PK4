@@ -26,7 +26,6 @@ private:
 	sf::Text start;
 	sf::Text restart;
 	sf::Text quit;
-
 public:
 	Menu(sf::RenderWindow*, Map* ,PlayerBase* ,std::vector<std::shared_ptr<Tower>>* ,std::vector<std::shared_ptr<Enemy>>*);
 	~Menu();

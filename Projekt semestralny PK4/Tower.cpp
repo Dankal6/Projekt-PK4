@@ -88,7 +88,6 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 	}
 	sf::Vector2f aimDirNorm;
 	std::thread the_thread(&Tower::calcaimDirNorm,this, enemy_pos, enemy_speed, this->position, std::ref(aimDirNorm));
-	//std::thread the_thread(&Tower::calc, this,  2, 4);
 	the_thread.join();
 	float deg = atan2(aimDirNorm.y, aimDirNorm.x) * 180 / 3.14f;
 
@@ -167,16 +166,11 @@ void Tower::actionWithTower()
 
 void Tower::calcaimDirNorm(sf::Vector2f enemy_pos, sf::Vector2f enemy_speed, sf::Vector2f position, sf::Vector2f &aimDirNorm)
 {
-	float x = 20;
+	float x = 8;
 	sf::Vector2f aimDir = enemy_pos - position + x * enemy_speed;
 	float aimVectorMod = sqrt(pow(aimDir.x, 2) + pow(aimDir.y, 2));
 	aimDirNorm = aimDir / aimVectorMod;
 
-}
-
-void Tower::calc(int x, int y)
-{
-	int a = x + y;
 }
 
 int Tower::returnDamage()

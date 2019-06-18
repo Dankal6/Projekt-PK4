@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1920*scale, 1080*scale), "TD");
+	sf::RenderWindow window(sf::VideoMode(1920*scale, 1080*scale), "Projekt PK4 Daniel Kaleta");
 	window.setFramerateLimit(60);
 	window.setKeyRepeatEnabled(false);
 
@@ -28,11 +28,7 @@ int main()
 	TowerManager towermanager(&map, &Towers, &window, &playerbase, &Enemies);
 	Menu menu(&window, &map, &playerbase, &Towers, &Enemies);
 
-	bool a = map.setMapTexture();
-	if (a == false)
-	{
-		return 0;
-	}
+	map.setMapTexture();
 
 	menu.action();
 
@@ -100,6 +96,7 @@ int main()
 			//start gry, przeciwnik rusza
 			if (playerbase.getStart())
 			{
+				towermanager.shooting();
 				if (enemybase.returnFrames() >= 30)
 				{
 					enemybase.spawnEnemy();

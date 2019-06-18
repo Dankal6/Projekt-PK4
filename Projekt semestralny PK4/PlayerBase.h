@@ -10,14 +10,8 @@ class PlayerBase
 private:
 	sf::Vector2f position;
 	sf::RectangleShape base;
-	int lifes;
-	int speed;
-	int wave;
-	std::vector<Enemy*> *Enemies;
+	std::vector<std::shared_ptr<Enemy>> *Enemies;
 	EnemyBase *enemybase;
-	int points = 0;
-	int cash = 0;
-	bool start = false;
 	sf::RectangleShape playerInfo;
 	sf::Texture playerInfoTexture;
 	sf::Font ttf;
@@ -26,14 +20,19 @@ private:
 	sf::Text _lifes;
 	sf::Text _speed;
 	sf::Text _wave;
+
+	int lifes;
+	int speed;
+	int wave;
+	int points = 0;
+	int cash = 0;
+	bool start = false;
 public:
 	PlayerBase(EnemyBase*);
 	~PlayerBase();
 	void check_if_enemy_in();
 	void gameOver(sf::RenderWindow*);
 	void drawBase(sf::RenderWindow*);
-
-	void setSpeed(int);
 
 	void addPoints(int);
 	int returnPoints();
@@ -45,7 +44,9 @@ public:
 	void spendCash(int);
 
 	void setLifes(int);
+	void setSpeed(int);
 	void setWave();
+	void resetWaves();
 
 	void setStart(bool);
 	bool getStart();

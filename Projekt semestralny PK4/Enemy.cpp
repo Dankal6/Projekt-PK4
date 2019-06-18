@@ -1,7 +1,5 @@
 #include "Enemy.h"
 
-int how_many_enemies = 0;
-
 Enemy::Enemy(sf::Vector2f pos, int _type, int wave)
 {
 	enemy.setSize(sf::Vector2f(25.0f*scale, 50.0f*scale));
@@ -19,42 +17,93 @@ Enemy::Enemy(sf::Vector2f pos, int _type, int wave)
 	this->setSpeed(2, 0);
 	if (type == 1)
 	{
-		enemyTexture.loadFromFile("Textures/orc_warrior-green-SWEN.png");
-		this->healthPoint = 30 + ((type*10*wave)/2);
-		this->healthPointLeft = this->healthPoint;
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_warrior-green-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 30 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
+
 	}
 	else if (type == 2)
 	{
-		enemyTexture.loadFromFile("Textures/orc_chief-brown-SWEN.png");
-		this->healthPoint = 60 + ((type * 10 * wave) / 2);
-		this->healthPointLeft = this->healthPoint;
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_chief-brown-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 60 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
 	}
 	else if (type == 3)
 	{
-		enemyTexture.loadFromFile("Textures/orc_spearman-green-SWEN.png");
-		this->healthPoint = 40 + ((type * 10 * wave) / 2);
-		this->healthPointLeft = this->healthPoint;
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_spearman-green-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 40 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
 	}
 	else if (type == 4)
 	{
-		enemyTexture.loadFromFile("Textures/orc_shaman-brown-SWEN.png");
-		this->healthPoint = 80 + ((type * 10 * wave) / 2);
-		this->healthPointLeft = this->healthPoint;
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_shaman-brown-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 80 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
 	}
-
 	enemyTexture.setSmooth(true);
 	enemy.setTexture(&enemyTexture);
 	animation = new Animation(&enemyTexture, sf::Vector2u(3, 4), 0.3);
-
-	how_many_enemies++;
-
 }
 
 
 Enemy::~Enemy()
 {
-	how_many_enemies--;
-	//std::cout << "Destroy enemy, remain: " << how_many_enemies << std::endl;
 }
 
 void Enemy::drawEnemy(sf::RenderWindow& window)
@@ -79,14 +128,12 @@ void Enemy::move(float deltaTime)
 	this->checkToTurn();
 
 	enemy.move(speed);
-	this->position = enemy.getPosition();
 	healthBar.move(speed);
 }
 
 void Enemy::checkToTurn()
 {
 	//zakrety na trasie
-	//std::cout << "Enemy position x: " << enemy.getPosition().x << " y: " << enemy.getPosition().y << std::endl;
 	if (enemy.getPosition().x > 478 * scale && enemy.getPosition().x < 482 * scale && enemy.getPosition().y >= 144 * scale && enemy.getPosition().y < 302 * scale)
 	{
 		this->setSpeed(0 * scale, 2 * scale);
@@ -144,7 +191,7 @@ void Enemy::setSpeed(float x, float y)
 
 sf::Vector2f Enemy::getPosition()
 {
-	return this->position;
+	return enemy.getPosition();
 }
 
 sf::Vector2f Enemy::returnSpeed()
@@ -177,7 +224,6 @@ bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_
 			if (this->healthPointLeft <= 0)
 			{
 				Enemies->erase(Enemies->begin() + i);
-				std::cout << "Padl przeciwnik: " << i << ", pozostalo przeciwnikow: " << Enemies->size() << std::endl;
 				player->addPoints(1);
 				player->addCash(1);
 				return true;

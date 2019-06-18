@@ -25,7 +25,7 @@ private:
 	int showRange = false;
 	int damage;
 	int upgradeLevel;
-	int frame;	//prowizoryczna czestotliwosc strzelania dla kazdej z wiezyczek
+	int frame;	//czestotliwosc strzelania dla kazdej z wiezyczek
 public:
 	Tower(sf::RenderWindow*,sf::Vector2f,int);
 	~Tower();
@@ -33,6 +33,8 @@ public:
 	void drawRange(bool);
 	void shoot();
 	void aim(std::shared_ptr<Enemy>);
+	std::vector<std::shared_ptr<Bullet>> *returnBullets();
+	void bullets_out_of_range();
 	std::shared_ptr<Enemy> check_if_in_range(std::vector<std::shared_ptr<Enemy>>*);
 	bool isClicked(sf::Vector2f);
 	sf::Vector2f returnPosition();
@@ -45,12 +47,8 @@ public:
 	void setLevel(int);
 	int returnRange();
 	void setRange(int);
-
 	int returnType();
 
-
-	std::vector<std::shared_ptr<Bullet>> *returnBullets();
-	void bullets_out_of_range();
 	void incrementFrame();
 	int returnFrames();
 	void resetFrames();
@@ -58,7 +56,6 @@ public:
 
 	void actionWithTower();
 	void calcaimDirNorm(sf::Vector2f, sf::Vector2f, sf::Vector2f, sf::Vector2f&);
-	void calc(int, int);
 };
 
 

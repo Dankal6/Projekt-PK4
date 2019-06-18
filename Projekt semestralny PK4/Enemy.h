@@ -12,13 +12,12 @@ class Enemy
 private:
 	sf::Vector2f speed;
 	sf::RectangleShape enemy;
-	sf::Vector2f position;
 	sf::RectangleShape healthBar;
+	sf::Texture enemyTexture;
+	Animation *animation;
 	double healthPoint;
 	double healthPointLeft;
 	int type;
-	sf::Texture enemyTexture;
-	Animation *animation;
 public:
 	Enemy(sf::Vector2f,int,int);
 	~Enemy();

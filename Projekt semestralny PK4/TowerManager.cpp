@@ -10,41 +10,12 @@ TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Tower
 	player = _player;
 	Enemies = _Enemies;
 
-	buttonX.setRadius(20 * scale);
-	buttonXTexture.loadFromFile("Textures/X.png");
-	buttonXTexture.setSmooth(true);
-	buttonX.setTexture(&buttonXTexture);
-	buttonX.setOrigin(20 * scale, 20 * scale);
-
-	buttonUpgrade.setRadius(20 * scale);
-	buttonUpgradeTexture.loadFromFile("Textures/upgrade.png");
-	buttonUpgradeTexture.setSmooth(true);
-	buttonUpgrade.setTexture(&buttonUpgradeTexture);
-	buttonUpgrade.setOrigin(20 * scale, 20 * scale);
-
-	buttonY.setRadius(20 * scale);
-	buttonYTexture.loadFromFile("Textures/Y.png");
-	buttonYTexture.setSmooth(true);
-	buttonY.setTexture(&buttonYTexture);
-	buttonY.setOrigin(20 * scale, 20 * scale);
-
-	buttonArrow.setSize(sf::Vector2f(40 * scale, 40 * scale));
-	buttonArrowTexture.loadFromFile("Textures/bow.png");
-	buttonArrowTexture.setSmooth(true);
-	buttonArrow.setTexture(&buttonArrowTexture);
-	buttonArrow.setOrigin(20 * scale, 20 * scale);
-
-	buttonFireball.setSize(sf::Vector2f(40 * scale, 40 * scale));
-	buttonFireballTexture.loadFromFile("Textures/fireball.png");
-	buttonFireballTexture.setSmooth(true);
-	buttonFireball.setTexture(&buttonFireballTexture);
-	buttonFireball.setOrigin(20 * scale, 20 * scale);
-
-	towerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
-	towerInfoTexture.loadFromFile("Textures/infoTower.png");
-	towerInfoTexture.setSmooth(true);
-	towerInfo.setTexture(&towerInfoTexture);
-	towerInfo.setPosition(-500, 0);
+	loadXTexture();
+	loadUpgradeTexture();
+	loadYTexture();
+	loadBowTexture();
+	loadFireballTexture();
+	loadInfoTowerTexture();
 
 	ttf.loadFromFile("fonts/towerInfo.ttf");
 	towerLevel.setFont(ttf);
@@ -330,9 +301,9 @@ void TowerManager::shooting()
 			}
 		}
 		//sprawdzanie, czy przeciwnik zostal trafiony
-		for (auto e : Enemies)
+		for (auto e : *Enemies)
 		{
-			bool hitted = e->gotHitted(&Enemies, t, player);
+			bool hitted = e->gotHitted(Enemies, t, player);
 			//gotHitted zwraca true gry przecniwnik zginie i zostanie usuniety z wektora, dlatego po usunieciu wychodze z petli
 			if (hitted == true)
 				break;
@@ -354,5 +325,143 @@ void TowerManager::incrementFrames()
 	for (auto t : *Towers)
 	{
 		t->incrementFrame();
+	}
+}
+
+void TowerManager::loadXTexture()
+{
+	try
+	{
+		bool a = buttonXTexture.loadFromFile("Textures/X.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		buttonX.setRadius(20 * scale);
+		buttonXTexture.setSmooth(true);
+		buttonX.setTexture(&buttonXTexture);
+		buttonX.setOrigin(20 * scale, 20 * scale);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadUpgradeTexture()
+{
+	try
+	{
+		bool a = buttonUpgradeTexture.loadFromFile("Textures/upgrade.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		buttonUpgrade.setRadius(20 * scale);
+		buttonUpgradeTexture.setSmooth(true);
+		buttonUpgrade.setTexture(&buttonUpgradeTexture);
+		buttonUpgrade.setOrigin(20 * scale, 20 * scale);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadYTexture()
+{
+	try
+	{
+		bool a = buttonYTexture.loadFromFile("Textures/Y.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		buttonY.setRadius(20 * scale);
+		buttonYTexture.setSmooth(true);
+		buttonY.setTexture(&buttonYTexture);
+		buttonY.setOrigin(20 * scale, 20 * scale);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadBowTexture()
+{
+	try
+	{
+		bool a = buttonArrowTexture.loadFromFile("Textures/bow.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		buttonArrow.setSize(sf::Vector2f(40 * scale, 40 * scale));
+		buttonArrowTexture.setSmooth(true);
+		buttonArrow.setTexture(&buttonArrowTexture);
+		buttonArrow.setOrigin(20 * scale, 20 * scale);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadFireballTexture()
+{
+	try
+	{
+		bool a = buttonFireballTexture.loadFromFile("Textures/fireball.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		buttonFireball.setSize(sf::Vector2f(40 * scale, 40 * scale));
+		buttonFireballTexture.setSmooth(true);
+		buttonFireball.setTexture(&buttonFireballTexture);
+		buttonFireball.setOrigin(20 * scale, 20 * scale);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadInfoTowerTexture()
+{
+	try
+	{
+		bool a = towerInfoTexture.loadFromFile("Textures/infoTower.png");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that texture!";
+			throw wyjatek;
+		}
+		towerInfo.setSize(sf::Vector2f(430 * scale, 350 * scale));
+		towerInfoTexture.setSmooth(true);
+		towerInfo.setTexture(&towerInfoTexture);
+		towerInfo.setPosition(-500, 0);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
 	}
 }

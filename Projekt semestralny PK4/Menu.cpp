@@ -101,6 +101,7 @@ void Menu::action()
 					player->setPoints(0);
 					player->setLifes(20);
 					player->setStart(false);
+					player->resetWaves();
 					return;
 				}
 				else if (isQuitClicked(mousePos))
