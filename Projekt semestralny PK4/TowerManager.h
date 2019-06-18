@@ -9,6 +9,8 @@ class TowerManager
 {
 	std::vector<std::shared_ptr<PlaceForTower>> *placesForTowers;
 	std::vector<std::shared_ptr<Tower>> *Towers;
+	std::vector<std::shared_ptr<Enemy>> *Enemies;
+	PlayerBase *player;
 	sf::RenderWindow *window;
 	sf::Font ttf;
 	sf::Text towerLevel;
@@ -20,7 +22,7 @@ class TowerManager
 	sf::Text fireballUpgradeCost;
 	sf::Text arrowSell;
 	sf::Text fireballSell;
-	PlayerBase *player;
+
 
 	sf::CircleShape buttonX;
 	sf::Texture buttonXTexture;
@@ -39,7 +41,7 @@ class TowerManager
 	std::shared_ptr<Tower> managedTower;
 	std::shared_ptr<PlaceForTower> managedPlace;
 public:
-	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*,sf::RenderWindow*,PlayerBase*);
+	TowerManager(Map*,std::vector<std::shared_ptr<Tower>>*,sf::RenderWindow*,PlayerBase*, std::vector<std::shared_ptr<Enemy>>*);
 	~TowerManager();
 
 	bool isPlaceClicked(sf::Vector2f);
@@ -50,5 +52,8 @@ public:
 	void sellTower(std::shared_ptr<Tower>);
 	void upgradeTower(std::shared_ptr<Tower>);
 	void showTowerInfo(std::shared_ptr<Tower>);
+	void shooting();
+	void drawTowers();
+	void incrementFrames();
 };
 

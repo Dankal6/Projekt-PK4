@@ -1,9 +1,3 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/System/Clock.hpp>
-#include <SFML/System/Time.hpp>
-
-#include <thread>
-#include <iostream>
 #include "Enemy.h"
 #include "Tower.h"
 #include "EnemyBase.h"
@@ -24,41 +18,32 @@ int main()
 
 	sf::Clock clock;
 	float deltaTime;
-
-	int frame = 0;
-	bool start = false;
-	bool placing_tower = false;
 	bool game_paused = false;
 
 	vector<std::shared_ptr<Tower>> Towers;
 	vector<std::shared_ptr<Enemy>> Enemies;
 	Map map;
+	EnemyBase enemybase(&window, &Enemies);
+	PlayerBase playerbase(&enemybase);
+	TowerManager towermanager(&map, &Towers, &window, &playerbase, &Enemies);
+	Menu menu(&window, &map, &playerbase, &Towers, &Enemies);
+
 	bool a = map.setMapTexture();
 	if (a == false)
 	{
 		return 0;
 	}
-	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
-	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale),&enemybase);
-	TowerManager towermanager(&map, &Towers,&window,&playerbase);
-	Menu menu(&window, &map, &playerbase, &Towers, &Enemies);
 
 	menu.action();
 
 	while (window.isOpen())
 	{
-		//std::cout << sf::Mouse::getPosition(window).x << ";" << sf::Mouse::getPosition(window).y << endl;
 		deltaTime = clock.restart().asSeconds();
 		window.clear();
-		frame++;
 		map.drawMap(window);
 
-
 		//czesc odpowiedzialna za czestotliwosc pojawiania sie przeciwnika, oraz pociskow
-		for (auto t : Towers)
-		{
-			t->incrementFrame();
-		}
+		towermanager.incrementFrames();
 		enemybase.incrementFrame();
 
 		sf::Event event;
@@ -81,7 +66,7 @@ int main()
 					towermanager.nothingClicked();
 				}
 			}
-			//Tworze nowego przeciwnika
+			//Zmiany predkosci gry
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
 			{
 				game_paused = false;
@@ -112,60 +97,23 @@ int main()
 		}
 		if (game_paused == false)
 		{
-
-			playerbase.check_if_enemy_in(&Enemies);
-			//rysowanie wiez
-			for (auto t : Towers)
-			{
-				t->shoot();
-				//sprawdzanie, czy jakis przecinik jest w zasiegu
-				shared_ptr<Enemy> enemy_to_shoot = t->check_if_in_range(&Enemies);
-				if (enemy_to_shoot != NULL)
-				{
-					if (t->returnFrames() >= 20)
-					{
-						//wycelowanie
-						t->aim(enemy_to_shoot);
-						t->resetFrames();
-					}
-				}
-				//sprawdzanie, czy przeciwnik zostal trafiony
-				for (auto e : Enemies)
-				{
-					bool x = e->gotHitted(&Enemies, t, &playerbase);
-					//gotHitted zwraca true gry przecniwnik zginie i zostanie usuniety z wektora, dlatego po usunieciu wychodze z petli
-					if (x == true)
-						break;		
-				}
-			}
 			//start gry, przeciwnik rusza
-			if (start)
+			if (playerbase.getStart())
 			{
 				if (enemybase.returnFrames() >= 30)
 				{
-					enemybase.spawnEnemy(&Enemies);
+					enemybase.spawnEnemy();
 					enemybase.resetFrames();
 				}
-
-				for (auto e : Enemies)
-				{
-					e->move(deltaTime);
-				}
+				enemybase.moveEnemies(deltaTime);
+				playerbase.check_if_enemy_in();
 			}
 		}
-		//rysowanie bazy gracza
+		//rysowanie
 		playerbase.drawBase(&window);
-		enemybase.drawBase(window);
-		//rysowanie pociskow i wiez
-		for (auto t : Towers)
-		{
-			t->drawTower();
-		}
-		//rysowanie przeciwnikow
-		for (auto e : Enemies)
-		{
-			e->drawEnemy(window);
-		}
+		enemybase.drawBase();
+		enemybase.drawEnemies();
+		towermanager.drawTowers();
 		towermanager.drawMenu();
 		window.display();
 	}

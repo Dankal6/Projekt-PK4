@@ -2,11 +2,11 @@
 
 
 
-PlayerBase::PlayerBase(sf::Vector2f pos, EnemyBase *_enemybase)
+PlayerBase::PlayerBase(EnemyBase *_enemybase)
 {
 	base.setSize(sf::Vector2f(60.0f*scale, 60.0f*scale));
 	base.setFillColor(sf::Color::Blue);
-	base.setPosition(pos);
+	base.setPosition(sf::Vector2f(1940.0f*scale, 920.0f*scale));
 	base.setOrigin(30 * scale, 30 * scale);
 	lifes = 20;
 	enemybase = _enemybase;

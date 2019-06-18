@@ -2,14 +2,16 @@
 
 
 
-EnemyBase::EnemyBase(sf::Vector2f pos)
+EnemyBase::EnemyBase(sf::RenderWindow *_window,std::vector<std::shared_ptr<Enemy>>*_Enemies)
 {
-	position = pos;
+	position = sf::Vector2f(-20.0f*scale, 145.0f*scale);
 	frame = 0;
+	Enemies = _Enemies;
+	window = _window;
 
 	base.setSize(sf::Vector2f(60.0f*scale, 60.0f*scale));
 	base.setFillColor(sf::Color::Red);
-	base.setPosition(pos);
+	base.setPosition(position);
 	base.setOrigin(30 * scale, 30 * scale);
 }
 
@@ -18,7 +20,7 @@ EnemyBase::~EnemyBase()
 {
 }
 
-void EnemyBase::spawnEnemy(std::vector<std::shared_ptr<Enemy>> *Enemies)
+void EnemyBase::spawnEnemy()
 {
 
 
@@ -53,9 +55,9 @@ void EnemyBase::setToSpawn(int x)
 	this->toSpawn = x;
 }
 
-void EnemyBase::drawBase(sf::RenderWindow & window)
+void EnemyBase::drawBase()
 {
-	window.draw(base);
+	window->draw(base);
 }
 
 void EnemyBase::incrementFrame()
@@ -76,4 +78,21 @@ void EnemyBase::resetFrames()
 int EnemyBase::returnWave()
 {
 	return this->wave;
+}
+
+void EnemyBase::moveEnemies(float deltaTime)
+{
+	for (auto e : *Enemies)
+	{
+		e->move(deltaTime);
+	}
+}
+
+void EnemyBase::drawEnemies()
+{
+	//rysowanie przeciwnikow
+	for (auto e : *Enemies)
+	{
+		e->drawEnemy(*window);
+	}
 }

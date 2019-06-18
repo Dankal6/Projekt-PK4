@@ -27,9 +27,9 @@ private:
 	sf::Text _speed;
 	sf::Text _wave;
 public:
-	PlayerBase(sf::Vector2f,EnemyBase*);
+	PlayerBase(EnemyBase*);
 	~PlayerBase();
-	void check_if_enemy_in(std::vector<std::shared_ptr<Enemy>> *);
+	void check_if_enemy_in();
 	void gameOver(sf::RenderWindow*);
 	void drawBase(sf::RenderWindow*);
 

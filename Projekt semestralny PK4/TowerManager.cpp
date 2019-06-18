@@ -2,12 +2,13 @@
 
 
 
-TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Towers, sf::RenderWindow *_window, PlayerBase *_player)
+TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Towers, sf::RenderWindow *_window, PlayerBase *_player, std::vector<std::shared_ptr<Enemy>> *_Enemies)
 {
 	placesForTowers = map->returnPlaces();
 	Towers = _Towers;
 	window = _window;
 	player = _player;
+	Enemies = _Enemies;
 
 	buttonX.setRadius(20 * scale);
 	buttonXTexture.loadFromFile("Textures/X.png");
@@ -308,4 +309,50 @@ void TowerManager::showTowerInfo(std::shared_ptr<Tower> managedTower)
 	std::string towerRan = "Range: " + std::to_string(managedTower->returnRange());
 	towerRange.setString(towerRan);
 	towerRange.setPosition(60 * scale, 900 * scale);
+}
+
+void TowerManager::shooting()
+{
+
+	//rysowanie wiez
+	for (auto t : *Towers)
+	{
+		t->shoot();
+		//sprawdzanie, czy jakis przecinik jest w zasiegu
+		std::shared_ptr<Enemy> enemy_to_shoot = t->check_if_in_range(Enemies);
+		if (enemy_to_shoot != NULL)
+		{
+			if (t->returnFrames() >= 20)
+			{
+				//wycelowanie
+				t->aim(enemy_to_shoot);
+				t->resetFrames();
+			}
+		}
+		//sprawdzanie, czy przeciwnik zostal trafiony
+		for (auto e : Enemies)
+		{
+			bool hitted = e->gotHitted(&Enemies, t, player);
+			//gotHitted zwraca true gry przecniwnik zginie i zostanie usuniety z wektora, dlatego po usunieciu wychodze z petli
+			if (hitted == true)
+				break;
+		}
+	}
+}
+
+void TowerManager::drawTowers()
+{
+	//rysowanie pociskow i wiez
+	for (auto t : *Towers)
+	{
+		t->drawTower();
+	}
+}
+
+void TowerManager::incrementFrames()
+{
+	for (auto t : *Towers)
+	{
+		t->incrementFrame();
+	}
 }
