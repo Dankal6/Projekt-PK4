@@ -41,9 +41,9 @@ int main()
 	EnemyBase enemybase(sf::Vector2f(-20.0f*scale, 145.0f*scale));
 	PlayerBase playerbase(sf::Vector2f(1940.0f*scale, 920.0f*scale),&enemybase);
 	TowerManager towermanager(&map, &Towers,&window,&playerbase);
-	Menu menu(&window);
+	Menu menu(&window, &map, &playerbase, &Towers, &Enemies);
 
-	menu.action(map, playerbase, Towers, Enemies);
+	menu.action();
 
 	while (window.isOpen())
 	{
@@ -70,7 +70,7 @@ int main()
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 			{
-				menu.action(map,playerbase, Towers, Enemies);
+				menu.action();
 			}
 			//operacje zwiazane z myszka
 			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
@@ -107,17 +107,7 @@ int main()
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-				start = true;
-				enemybase.setToSpawn(500);
-				//prowizoryczne poki co wyswietlanie Start
-				sf::Font ttf;
-				ttf.loadFromFile("fonts/font.otf");
-				std::string s("Start");
-				sf::Text txt(s, ttf);
-				txt.setCharacterSize(150);
-				txt.setFillColor(sf::Color::Red);
-				txt.setPosition(1000 * scale, 40 * scale);
-				window.draw(txt);
+				playerbase.setStart(true);
 			}
 		}
 		if (game_paused == false)

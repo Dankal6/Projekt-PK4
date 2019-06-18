@@ -17,6 +17,7 @@ private:
 	EnemyBase *enemybase;
 	int points = 0;
 	int cash = 0;
+	bool start = false;
 	sf::RectangleShape playerInfo;
 	sf::Texture playerInfoTexture;
 	sf::Font ttf;
@@ -45,5 +46,8 @@ public:
 
 	void setLifes(int);
 	void setWave();
+
+	void setStart(bool);
+	bool getStart();
 };
 

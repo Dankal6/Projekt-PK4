@@ -10,6 +10,10 @@ class Menu
 {
 private:
 	sf::RenderWindow *window;
+	Map* map;
+	PlayerBase* player;
+	std::vector<std::shared_ptr<Tower>>* Towers;
+	std::vector<std::shared_ptr<Enemy>>* Enemies;
 
 	sf::RectangleShape menu;
 	sf::RectangleShape startButton;
@@ -24,10 +28,10 @@ private:
 	sf::Text quit;
 
 public:
-	Menu(sf::RenderWindow*);
+	Menu(sf::RenderWindow*, Map* ,PlayerBase* ,std::vector<std::shared_ptr<Tower>>* ,std::vector<std::shared_ptr<Enemy>>*);
 	~Menu();
 	void drawMenu();
-	void action(Map&,PlayerBase&, std::vector<std::shared_ptr<Tower>>&, std::vector<std::shared_ptr<Enemy>>&);
+	void action();
 	bool isPlayClicked(sf::Vector2f);
 	bool isQuitClicked(sf::Vector2f);
 	bool isReplayClicked(sf::Vector2f);

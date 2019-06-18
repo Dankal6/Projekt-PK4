@@ -2,9 +2,13 @@
 
 
 
-Menu::Menu(sf::RenderWindow* _window)
+Menu::Menu(sf::RenderWindow* _window ,Map* _map, PlayerBase*_player, std::vector<std::shared_ptr<Tower>>*_Towers, std::vector<std::shared_ptr<Enemy>>*_Enemies)
 {
 	window = _window;
+	map = _map;
+	player = _player;
+	Towers = _Towers;
+	Enemies = _Enemies;
 	menu.setSize(sf::Vector2f(1920 * scale, 1080 * scale));
 	menu.setFillColor(sf::Color(200, 255, 200, 180));
 
@@ -66,11 +70,11 @@ void Menu::drawMenu()
 	window->draw(quit);
 }
 
-void Menu::action(Map &map, PlayerBase&player, std::vector<std::shared_ptr<Tower>>& towers, std::vector<std::shared_ptr<Enemy>>& enemies)
+void Menu::action()
 {
 	while (window->isOpen())
 	{
-		map.drawMap(*window);
+		map->drawMap(*window);
 		drawMenu();
 		sf::Event event;
 		while (window->pollEvent(event))
@@ -87,15 +91,16 @@ void Menu::action(Map &map, PlayerBase&player, std::vector<std::shared_ptr<Tower
 					return;
 				else if (isReplayClicked(mousePos))
 				{
-					for (auto t : towers)
+					for (auto t : *Towers)
 					{
 						t->getPlace()->setOccupied(false);
 					}
-					towers.clear();
-					enemies.clear();
-					player.setCash(50);
-					player.setPoints(0);
-					player.setLifes(20);
+					Towers->clear();
+					Enemies->clear();
+					player->setCash(50);
+					player->setPoints(0);
+					player->setLifes(20);
+					player->setStart(false);
 					return;
 				}
 				else if (isQuitClicked(mousePos))

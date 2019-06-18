@@ -146,6 +146,16 @@ void PlayerBase::setWave()
 	_wave.setString("Wave: " + std::to_string(enemybase->returnWave()));
 }
 
+void PlayerBase::setStart(bool _start)
+{
+	this->start = _start;
+}
+
+bool PlayerBase::getStart()
+{
+	return start;
+}
+
 void PlayerBase::setCash(int x)
 {
 	this->cash = x;
