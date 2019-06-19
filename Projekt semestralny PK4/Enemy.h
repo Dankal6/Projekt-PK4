@@ -15,7 +15,7 @@ private:
 	sf::RectangleShape healthBar;
 	sf::Texture enemyTexture;
 	Animation *animation;
-	std::thread the_thread;
+	static std::thread the_thread;
 	double healthPoint;
 	double healthPointLeft;
 	int type;

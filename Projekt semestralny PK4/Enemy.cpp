@@ -143,9 +143,17 @@ bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_
 			tower->returnBullets()->erase(tower->returnBullets()->begin() + j);
 			if (this->healthPointLeft <= 0)
 			{
+				if (this->type == 2 || this->type == 4)
+				{
+					player->addPoints(2);
+					player->addCash(2);
+				}
+				else
+				{
+					player->addPoints(1);
+					player->addCash(1);
+				}
 				Enemies->erase(Enemies->begin() + i);
-				player->addPoints(1);
-				player->addCash(1);
 				return true;
 			}
 			return false;
@@ -176,7 +184,7 @@ void Enemy::loadTextures(int type, int wave)
 				std::string wyjatek = "Please check for that texture!";
 				throw wyjatek;
 			}
-			this->healthPoint = 30 + ((type * 10 * wave) / 2);
+			this->healthPoint = 20 + ((type * 5 * wave) / 2);
 			this->healthPointLeft = this->healthPoint;
 		}
 		catch (std::string wyjatek)
@@ -197,7 +205,7 @@ void Enemy::loadTextures(int type, int wave)
 				std::string wyjatek = "Please check for that texture!";
 				throw wyjatek;
 			}
-			this->healthPoint = 60 + ((type * 10 * wave) / 2);
+			this->healthPoint = 40 + ((type * 5 * wave) / 2);
 			this->healthPointLeft = this->healthPoint;
 		}
 		catch (std::string wyjatek)
@@ -217,7 +225,7 @@ void Enemy::loadTextures(int type, int wave)
 				std::string wyjatek = "Please check for that texture!";
 				throw wyjatek;
 			}
-			this->healthPoint = 40 + ((type * 10 * wave) / 2);
+			this->healthPoint = 30 + ((type * 5 * wave) / 2);
 			this->healthPointLeft = this->healthPoint;
 		}
 		catch (std::string wyjatek)
@@ -237,7 +245,7 @@ void Enemy::loadTextures(int type, int wave)
 				std::string wyjatek = "Please check for that texture!";
 				throw wyjatek;
 			}
-			this->healthPoint = 80 + ((type * 10 * wave) / 2);
+			this->healthPoint = 60 + ((type * 5 * wave) / 2);
 			this->healthPointLeft = this->healthPoint;
 		}
 		catch (std::string wyjatek)

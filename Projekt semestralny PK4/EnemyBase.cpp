@@ -22,8 +22,6 @@ EnemyBase::~EnemyBase()
 
 void EnemyBase::spawnEnemy()
 {
-
-
 	if (this->which_type == 3 || this->which_type == 4 || this->which_type == 6)
 	{
 		std::shared_ptr<Enemy> enemy = std::make_shared<Enemy>(position, 3, this->wave);
