@@ -73,10 +73,10 @@ void Tower::shoot()
 
 void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 {
-
 	sf::Vector2f enemy_pos = to_shoot->getPosition();
 	sf::Vector2f enemy_speed = to_shoot->returnSpeed();
-
+	sf::Vector2f aimDirNorm;
+	std::thread the_thread(&Tower::calcaimDirNorm, this, enemy_pos, enemy_speed, this->position, std::ref(aimDirNorm));
 	std::shared_ptr<Bullet> bullet;
 	if (this->type == 1)
 	{
@@ -86,13 +86,9 @@ void Tower::aim(std::shared_ptr<Enemy> to_shoot)
 	{
 		bullet = std::make_shared<Bullet>(this->position, type);
 	}
-	sf::Vector2f aimDirNorm;
-	std::thread the_thread(&Tower::calcaimDirNorm,this, enemy_pos, enemy_speed, this->position, std::ref(aimDirNorm));
 	the_thread.join();
 	float deg = atan2(aimDirNorm.y, aimDirNorm.x) * 180 / 3.14f;
-
 	bullet->setSpeed(6 * aimDirNorm.x, 6 * aimDirNorm.y);
-
 	bullet->setRotation(deg + 90);
 	Bullets.push_back(bullet);
 }
