@@ -15,6 +15,7 @@ private:
 	sf::RectangleShape healthBar;
 	sf::Texture enemyTexture;
 	Animation *animation;
+	std::thread the_thread;
 	double healthPoint;
 	double healthPointLeft;
 	int type;
@@ -30,5 +31,6 @@ public:
 	bool gotHitted(std::vector<std::shared_ptr<Enemy>> *, std::shared_ptr<Tower>,PlayerBase*);
 	double returnHealthAsPercent();
 	int returnType();
+	void loadTextures(int,int);
 };
 

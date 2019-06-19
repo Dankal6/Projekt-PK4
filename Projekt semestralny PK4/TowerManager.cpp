@@ -10,22 +10,10 @@ TowerManager::TowerManager(Map *map, std::vector<std::shared_ptr<Tower>> *_Tower
 	player = _player;
 	Enemies = _Enemies;
 
-	loadXTexture();
-	loadUpgradeTexture();
-	loadYTexture();
-	loadBowTexture();
-	loadFireballTexture();
-	loadInfoTowerTexture();
 
-	ttf.loadFromFile("fonts/towerInfo.ttf");
-	towerLevel.setFont(ttf);
-	towerDmg.setFont(ttf);
-	towerRange.setFont(ttf);
-	arrowCost.setFont(ttf);
-	fireballCost.setFont(ttf);
-	arrowUpgradeCost.setFont(ttf);
-	fireballUpgradeCost.setFont(ttf);
-
+	std::thread the_thread(&TowerManager::loadTexturesAndFont, this);
+	the_thread.join();
+	std::cout << "Przechodze dalej" <<std::endl;
 	towerLevel.setCharacterSize(35 * scale);
 	towerDmg.setCharacterSize(35 * scale);
 	towerRange.setCharacterSize(35 * scale);
@@ -167,7 +155,6 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 	{
 		if (t->returnTower()->getGlobalBounds().contains(mousePosition))
 		{
-			//t->returnTower()->setFillColor(sf::Color::Red);
 			managedTower = t;
 			managedTower->drawRange(true);
 
@@ -183,7 +170,7 @@ bool TowerManager::isTowerClicked(sf::Vector2f mousePosition)
 			else if (managedTower->returnType() == 2)
 				fireballUpgradeCost.setPosition(t->returnPosition().x - (75 * scale), t->returnPosition().y - (20 * scale));
 
-			showTowerInfo(managedTower);	//t to samo
+			showTowerInfo(managedTower);
 			towerInfo.setPosition(0, 720 * scale);
 			return true;
 		}
@@ -286,24 +273,24 @@ void TowerManager::shooting()
 {
 
 	//rysowanie wiez
-	for (auto t : *Towers)
+	for (std::vector<std::shared_ptr<Tower>>::iterator t = Towers->begin(); t != Towers->end(); t++)
 	{
-		t->shoot();
+		(*t)->shoot();
 		//sprawdzanie, czy jakis przecinik jest w zasiegu
-		std::shared_ptr<Enemy> enemy_to_shoot = t->check_if_in_range(Enemies);
+		std::shared_ptr<Enemy> enemy_to_shoot = (*t)->check_if_in_range(Enemies);
 		if (enemy_to_shoot != NULL)
 		{
-			if (t->returnFrames() >= 20)
+			if ((*t)->returnFrames() >= 20)
 			{
 				//wycelowanie
-				t->aim(enemy_to_shoot);
-				t->resetFrames();
+				(*t)->aim(enemy_to_shoot);
+				(*t)->resetFrames();
 			}
 		}
 		//sprawdzanie, czy przeciwnik zostal trafiony
-		for (auto e : *Enemies)
+		for (std::vector<std::shared_ptr<Enemy>>::iterator e = Enemies->begin(); e != Enemies->end(); e++)
 		{
-			bool hitted = e->gotHitted(Enemies, t, player);
+			bool hitted = (*e)->gotHitted(Enemies, *t, player);
 			//gotHitted zwraca true gry przecniwnik zginie i zostanie usuniety z wektora, dlatego po usunieciu wychodze z petli
 			if (hitted == true)
 				break;
@@ -322,10 +309,27 @@ void TowerManager::drawTowers()
 
 void TowerManager::incrementFrames()
 {
-	for (auto t : *Towers)
+	for (std::vector<std::shared_ptr<Tower>>::iterator t = Towers->begin(); t != Towers->end(); t++)
 	{
-		t->incrementFrame();
+		(*t)->incrementFrame();
 	}
+}
+
+void TowerManager::loadTexturesAndFont()
+{
+	std::thread the_thread2(&TowerManager::loadXTexture, this);
+	std::thread the_thread3(&TowerManager::loadUpgradeTexture, this);
+	std::thread the_thread4(&TowerManager::loadYTexture, this);
+	std::thread the_thread5(&TowerManager::loadBowTexture, this);
+	std::thread the_thread6(&TowerManager::loadFireballTexture, this);
+	std::thread the_thread7(&TowerManager::loadInfoTowerTexture, this);
+	loadFont();
+	the_thread2.join();
+	the_thread3.join();
+	the_thread4.join();
+	the_thread5.join();
+	the_thread6.join();
+	the_thread7.join();
 }
 
 void TowerManager::loadXTexture()
@@ -457,6 +461,32 @@ void TowerManager::loadInfoTowerTexture()
 		towerInfoTexture.setSmooth(true);
 		towerInfo.setTexture(&towerInfoTexture);
 		towerInfo.setPosition(-500, 0);
+	}
+	catch (std::string wyjatek)
+	{
+		std::cout << wyjatek << std::endl;
+		system("pause");
+		exit(0);
+	}
+}
+
+void TowerManager::loadFont()
+{
+	try
+	{
+		bool a = ttf.loadFromFile("fonts/towerInfo.ttf");
+		if (a == false)
+		{
+			std::string wyjatek = "Please check for that Font!";
+			throw wyjatek;
+		}
+		towerLevel.setFont(ttf);
+		towerDmg.setFont(ttf);
+		towerRange.setFont(ttf);
+		arrowCost.setFont(ttf);
+		fireballCost.setFont(ttf);
+		arrowUpgradeCost.setFont(ttf);
+		fireballUpgradeCost.setFont(ttf);
 	}
 	catch (std::string wyjatek)
 	{

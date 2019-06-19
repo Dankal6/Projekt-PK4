@@ -12,6 +12,13 @@ class TowerManager
 	std::vector<std::shared_ptr<Enemy>> *Enemies;
 	PlayerBase *player;
 	sf::RenderWindow *window;
+	std::thread the_thread;
+	std::thread the_thread2;
+	std::thread the_thread3;
+	std::thread the_thread4;
+	std::thread the_thread5;
+	std::thread the_thread6;
+	std::thread the_thread7;
 	sf::Font ttf;
 	sf::Text towerLevel;
 	sf::Text towerDmg;
@@ -55,11 +62,13 @@ public:
 	void shooting();
 	void drawTowers();
 	void incrementFrames();
+	void loadTexturesAndFont();
 	void loadXTexture();
 	void loadUpgradeTexture();
 	void loadYTexture();
 	void loadBowTexture();
 	void loadFireballTexture();
 	void loadInfoTowerTexture();
+	void loadFont();
 };
 

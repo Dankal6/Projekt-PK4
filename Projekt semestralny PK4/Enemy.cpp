@@ -3,102 +3,22 @@
 Enemy::Enemy(sf::Vector2f pos, int _type, int wave)
 {
 	enemy.setSize(sf::Vector2f(25.0f*scale, 50.0f*scale));
-	//enemy.setFillColor(sf::Color::Red);
+	std::thread the_thread(&Enemy::loadTextures, this, _type, wave);
+
 	enemy.setPosition(pos);
 	enemy.setOrigin(10 * scale, 20 * scale);
 	type = _type;
-
 	healthBar.setSize(sf::Vector2f(26.0f*scale, 2.0f*scale));
 	healthBar.setFillColor(sf::Color::Green);
 	healthBar.setOrigin(13 * scale, 25 * scale);
 	healthBar.setPosition(pos);
-
-	//inicjacja ruchu
 	this->setSpeed(2, 0);
-	if (type == 1)
-	{
-		try
-		{
-			bool a = enemyTexture.loadFromFile("Textures/orc_warrior-green-SWEN.png");
-			if (a == false)
-			{
-				std::string wyjatek = "Please check for that texture!";
-				throw wyjatek;
-			}
-			this->healthPoint = 30 + ((type * 10 * wave) / 2);
-			this->healthPointLeft = this->healthPoint;
-		}
-		catch (std::string wyjatek)
-		{
-			std::cout << wyjatek << std::endl;
-			system("pause");
-			exit(0);
-		}
 
-	}
-	else if (type == 2)
-	{
-		try
-		{
-			bool a = enemyTexture.loadFromFile("Textures/orc_chief-brown-SWEN.png");
-			if (a == false)
-			{
-				std::string wyjatek = "Please check for that texture!";
-				throw wyjatek;
-			}
-			this->healthPoint = 60 + ((type * 10 * wave) / 2);
-			this->healthPointLeft = this->healthPoint;
-		}
-		catch (std::string wyjatek)
-		{
-			std::cout << wyjatek << std::endl;
-			system("pause");
-			exit(0);
-		}
-	}
-	else if (type == 3)
-	{
-		try
-		{
-			bool a = enemyTexture.loadFromFile("Textures/orc_spearman-green-SWEN.png");
-			if (a == false)
-			{
-				std::string wyjatek = "Please check for that texture!";
-				throw wyjatek;
-			}
-			this->healthPoint = 40 + ((type * 10 * wave) / 2);
-			this->healthPointLeft = this->healthPoint;
-		}
-		catch (std::string wyjatek)
-		{
-			std::cout << wyjatek << std::endl;
-			system("pause");
-			exit(0);
-		}
-	}
-	else if (type == 4)
-	{
-		try
-		{
-			bool a = enemyTexture.loadFromFile("Textures/orc_shaman-brown-SWEN.png");
-			if (a == false)
-			{
-				std::string wyjatek = "Please check for that texture!";
-				throw wyjatek;
-			}
-			this->healthPoint = 80 + ((type * 10 * wave) / 2);
-			this->healthPointLeft = this->healthPoint;
-		}
-		catch (std::string wyjatek)
-		{
-			std::cout << wyjatek << std::endl;
-			system("pause");
-			exit(0);
-		}
-	}
+	the_thread.join();
 	enemyTexture.setSmooth(true);
 	enemy.setTexture(&enemyTexture);
 	animation = new Animation(&enemyTexture, sf::Vector2u(3, 4), 0.3);
+
 }
 
 
@@ -219,7 +139,7 @@ bool Enemy::gotHitted(std::vector<std::shared_ptr<Enemy>> *Enemies, std::shared_
 		if (enemy.getGlobalBounds().contains(x, y))
 		{
 			this->healthPointLeft -= tower->returnDamage();
-			this->healthBar.setSize(sf::Vector2f(this->returnHealthAsPercent()*this->enemy.getSize().x, 2.0f));
+			this->healthBar.setSize(sf::Vector2f(this->returnHealthAsPercent()*this->enemy.getSize().x, 2.0f*scale));
 			tower->returnBullets()->erase(tower->returnBullets()->begin() + j);
 			if (this->healthPointLeft <= 0)
 			{
@@ -242,4 +162,89 @@ double Enemy::returnHealthAsPercent()
 int Enemy::returnType()
 {
 	return this->type;
+}
+
+void Enemy::loadTextures(int type, int wave)
+{
+	if (type == 1)
+	{
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_warrior-green-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 30 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
+
+	}
+	else if (type == 2)
+	{
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_chief-brown-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 60 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
+	}
+	else if (type == 3)
+	{
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_spearman-green-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 40 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
+	}
+	else if (type == 4)
+	{
+		try
+		{
+			bool a = enemyTexture.loadFromFile("Textures/orc_shaman-brown-SWEN.png");
+			if (a == false)
+			{
+				std::string wyjatek = "Please check for that texture!";
+				throw wyjatek;
+			}
+			this->healthPoint = 80 + ((type * 10 * wave) / 2);
+			this->healthPointLeft = this->healthPoint;
+		}
+		catch (std::string wyjatek)
+		{
+			std::cout << wyjatek << std::endl;
+			system("pause");
+			exit(0);
+		}
+	}
 }
