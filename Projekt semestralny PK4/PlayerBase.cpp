@@ -82,6 +82,8 @@ void PlayerBase::gameOver(sf::RenderWindow* window)
 	txt.setFillColor(sf::Color(69, 120, 189));
 	txt.setPosition(100 * scale, 40 * scale);
 	window->draw(txt);
+	speed = 0;
+	window->setFramerateLimit(1);
 }
 
 void PlayerBase::drawBase(sf::RenderWindow* window)
