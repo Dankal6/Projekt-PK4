@@ -24,6 +24,7 @@ Enemy::Enemy(sf::Vector2f pos, int _type, int wave)
 
 Enemy::~Enemy()
 {
+	delete animation;
 }
 
 void Enemy::drawEnemy(sf::RenderWindow& window)
