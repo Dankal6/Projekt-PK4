@@ -5,11 +5,9 @@
 class Map
 {
 private:
-	int level;
 	sf::RectangleShape map;
 	std::vector<std::shared_ptr<PlaceForTower>> placesForTowers;
 	sf::Texture mapTexture;
-	std::vector<sf::RectangleShape> squares;
 
 public:
 	Map();
